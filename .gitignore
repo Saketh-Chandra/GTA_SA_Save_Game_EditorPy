@@ -1,0 +1,5 @@
+### PyCharm ###
+.idea/**
+
+## Test file ##
+dummy.py
