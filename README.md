@@ -15,6 +15,12 @@
   - Infinite Nutter Weapon Set
   - Infinite Professional Weapon Set
   - Parachute
+- Adding Vehicle to Garage (Ganton garage (Grove St.),Santa Maria Beach garage, Muholland garage)
+- Adjusting Player Statistics
+  - Fat
+  - Muscle
+  - Stamina
+  - Sex Appeal
 
 ## How to Use it!
 1. Copy the GTA SA Save File (`GTASAsfx.b`) to `Save_Files` Directory/Folder.
