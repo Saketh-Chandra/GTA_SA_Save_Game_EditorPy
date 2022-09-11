@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css"/>
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <py-config>
+        - autoclose_loader: true
+        - runtimes:
+            -
+                src: "https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js"
+                name: pyodide-0.20
+                lang: python
+    </py-config>
+
+    <py-env>
+        - paths:
+            - "./src/GTA_SA_Save_Game_Editor.py"
+    </py-env>
+</head>
+<body>
+<py-script>
+    print("Hello World!")
+</py-script>
+
+<label for="bfile">Select a file:</label>
+<input class="form-control rounded mb-3" type="file" id="bfile" name="textfile" onchange="readfile(this)">
+
+<div>
+    <button id="b1" pys-onclick="main">Run</button>
+</div>
+
+<py-script src="/GTA_SA_Save_Game_EditorPy/static/py/main.py"></py-script>
+<script src="/GTA_SA_Save_Game_EditorPy/static/js/main.js"></script>
+
+<div id="output"></div>
+
+</body>
+</html>

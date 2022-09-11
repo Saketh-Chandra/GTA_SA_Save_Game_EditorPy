@@ -1,0 +1,22 @@
+{
+  "name": "GTA: SA Savegame EditorPy",
+  "short_name": "GTA: SA Savegame EditorPy",
+  "display": "standalone",
+  "start_url": "/GTA_SA_Save_Game_EditorPy/",
+  "scope": "/GTA_SA_Save_Game_EditorPy/",
+  "theme_color": "#000",
+  "icons": [
+    {
+      "src": "/GTA_SA_Save_Game_EditorPy/static/images/icons/GTA_SA_Savegame_EditorPy_icon_x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/GTA_SA_Save_Game_EditorPy/static/images/icons/GTA_SA_Savegame_EditorPy_icon_x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    }
+
+  ]
+}
