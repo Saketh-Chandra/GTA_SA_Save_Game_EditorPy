@@ -14,8 +14,19 @@
   - Infinite Thug Weapon Set
   - Infinite Nutter Weapon Set
   - Infinite Professional Weapon Set
-  - Parachute
+  - Parachute (optional)
+  - flowers (optional)
 - Adding Vehicle to Garage (Ganton garage (Grove St.),Santa Maria Beach garage, Muholland garage)
+  - Vehicle customisation:
+      - Fire Proof
+      - Bullet Proof
+      - Explosion Proof
+      - Collision Proof
+      - Melee Proof
+      - Bass Boost
+      - Hydraulics
+      - Nitrous
+      - Vehicle Color (Primary Color, Secondary Color, Tertiary Color, (Unknown) Quaternary Color)
 - Adjusting Player Statistics
   - Fat
   - Muscle

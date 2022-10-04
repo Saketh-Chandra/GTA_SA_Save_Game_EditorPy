@@ -85,7 +85,7 @@ class SaveFileInfo:
         address += 12
         self.data[address:address + 4] = struct.pack("<i", ammo)
 
-    def ThugSet(self, parachute=False):
+    def ThugSet(self, parachute=False, flowers=False):
         self.weapon(0, 1)
         self.weapon(1, 5)
         self.weapon(2, 22)
@@ -95,10 +95,12 @@ class SaveFileInfo:
         self.weapon(7, 35)
         self.weapon(8, 18)
         self.weapon(9, 41)
+        if flowers:
+            self.weapon(10, 0x0E)
         if parachute:
             self.weapon(11, 0x2E)
 
-    def NutterSet(self, parachute=False):
+    def NutterSet(self, parachute=False, flowers=False):
         self.weapon(1, 4)
         self.weapon(2, 24)
         self.weapon(3, 26)
@@ -108,10 +110,12 @@ class SaveFileInfo:
         self.weapon(7, 37)
         self.weapon(8, 16)
         self.weapon(9, 42)
+        if flowers:
+            self.weapon(10, 0x0E)
         if parachute:
             self.weapon(11, 0x2E)
 
-    def ProfessionalSet(self, parachute=False):
+    def ProfessionalSet(self, parachute=False, flowers=False):
         self.weapon(1, 9)
         self.weapon(2, 23)
         self.weapon(3, 27)
@@ -120,6 +124,8 @@ class SaveFileInfo:
         self.weapon(6, 34)
         self.weapon(7, 36)
         self.weapon(8, 39)
+        if flowers:
+            self.weapon(10, 0x0E)
         if parachute:
             self.weapon(11, 0x2E)
 
@@ -177,7 +183,9 @@ class SaveFileInfo:
             raise Exception("SexAppeal level ranges from 0 to 2000")
 
     def GarageVehicle(self, location='cjsafe', vehicle_ID=603, vehicle_mods=None, vehicle_colors=None, radio_station=3,
-                      nNitrous=1):
+                      nNitrous=1, bulletproof=False, fireproof=False, explosion_proof=False,
+                      collision_proof=False, melee_proof=False,
+                      bass_boost=False, hydraulics=False, all_proof=False):
         if location == 'cjsafe':
             garage = (2505.847, -1695.321, 13.27919)
             vec_rotation = [252, 99, 0]
@@ -198,8 +206,31 @@ class SaveFileInfo:
         self.data[addr:addr + 4] = struct.pack("<f", garage[1])
         addr += 4
         self.data[addr:addr + 4] = struct.pack("<f", garage[2])
-        addr += 10
+        addr += 8
+        CarFlag = 0
+        if not all_proof:
+            if bulletproof:
+                CarFlag += 0x01
+            if fireproof:
+                CarFlag += 0x02
+            if explosion_proof:
+                CarFlag += 0x04
+            if collision_proof:
+                CarFlag += 0x08
+            if melee_proof:
+                CarFlag += 0x10
+            if bass_boost:
+                CarFlag += 0x20
+            if hydraulics:
+                CarFlag += 0x40
+            if nNitrous:
+                CarFlag += 0x80
+        else:
+            CarFlag = 255
+        self.data[addr] = CarFlag
+        addr += 2
         self.data[addr:addr + 2] = struct.pack("<h", vehicle_ID)
+
         if not vehicle_mods:
             vehicle_mods = [0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff,
                             0xffff,
@@ -266,17 +297,17 @@ class SaveFileInfo:
 
 save = SaveFileInfo(filename="Save_Files/GTASAsf6.b")
 save.Money(Money=1010101)
-save.ProfessionalSet(parachute=True)
+save.ProfessionalSet(parachute=True, flowers=True)
 save.Fireproof()
 save.InfiniteRun()
 save.WantedLevel(Chaoslevel=0)
 save.Health()
 save.Armor()
-save.GarageVehicle(location='cjsafe', vehicle_ID=432)
-save.GarageVehicle(location='CEsafe1', vehicle_ID=415)
-save.GarageVehicle(location='beacsv', vehicle_ID=415, nNitrous=10)
+save.GarageVehicle(location='cjsafe', vehicle_ID=502, nNitrous=10, all_proof=True)
+save.GarageVehicle(location='CEsafe1', vehicle_ID=415, all_proof=True)
+save.GarageVehicle(location='beacsv', vehicle_ID=415, nNitrous=10, all_proof=True)
 save.Fat(level=0)
-save.Muscle(level=99)
+save.Muscle(level=999)
 save.Stamina(level=999)
 save.SexAppeal(level=1999)
 save.savefile(filename="Save_Files/GTASAsf5.b")
