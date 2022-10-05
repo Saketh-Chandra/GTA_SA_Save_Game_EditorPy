@@ -20,6 +20,8 @@ class offsets:
         self.Stamina = None
         self.Muscle = None
         self.SexAppeal = None
+        self.roadblocks_SF = None
+        self.roadblocks_LV = None
 
 
 class SaveFileInfo:
@@ -50,6 +52,10 @@ class SaveFileInfo:
         self.offsets.Stamina = self.blocks[16] + 0x58
         self.offsets.Muscle = self.blocks[16] + 0x5C
         self.offsets.SexAppeal = self.blocks[16] + 0x140
+
+        # Block 21
+        self.offsets.roadblocks_SF = self.blocks[21] + 5
+        self.offsets.roadblocks_LV = self.blocks[21] + 6
 
     def weapon(self, weapon_number, weapon_id, ammo=999999999):
         address = self.blocks[2]
@@ -182,6 +188,12 @@ class SaveFileInfo:
         else:
             raise Exception("SexAppeal level ranges from 0 to 2000")
 
+    def RoadBlocksSF(self, block=True):
+        self.data[self.offsets.roadblocks_SF] = block
+
+    def RoadBlocksLV(self, block=True):
+        self.data[self.offsets.roadblocks_LV] = block
+
     def GarageVehicle(self, location='cjsafe', vehicle_ID=603, vehicle_mods=None, vehicle_colors=None, radio_station=3,
                       nNitrous=1, bulletproof=False, fireproof=False, explosion_proof=False,
                       collision_proof=False, melee_proof=False,
@@ -295,7 +307,7 @@ class SaveFileInfo:
             out.write(self.data)
 
 
-save = SaveFileInfo(filename="Save_Files/GTASAsf6.b")
+save = SaveFileInfo(filename="Save_Files/GTASAsf5.b")
 save.Money(Money=1010101)
 save.ProfessionalSet(parachute=True, flowers=True)
 save.Fireproof()
@@ -310,5 +322,6 @@ save.Fat(level=0)
 save.Muscle(level=999)
 save.Stamina(level=999)
 save.SexAppeal(level=1999)
-save.savefile(filename="Save_Files/GTASAsf5.b")
-
+save.RoadBlocksSF(False)
+save.RoadBlocksLV(False)
+save.savefile(filename="Save_Files/GTASAsf6.b")
