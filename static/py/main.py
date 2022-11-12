@@ -81,7 +81,7 @@ def main(*args, **kwargs):
     save.Fireproof(Fireproof=fireproof)
 
     wantedlevel = int(document.getElementById("wantedlevel").value)
-    if wantedlevel:
+    if 0<= wantedlevel <=6:
         save.WantedLevel(Chaoslevel=wantedlevel)
 
     fat = int(document.getElementById("fat").value)
