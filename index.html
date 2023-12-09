@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GTA SA Save Game EditorPy</title>
 
-    <link rel="stylesheet" href="https://pyscript.net/releases/2022.12.1/pyscript.css" />
-    <script defer src="https://pyscript.net/releases/2022.12.1/pyscript.js"></script>
+    <!-- <link rel="stylesheet" href="https://pyscript.net/releases/2022.12.1/pyscript.css" />
+    <script defer src="https://pyscript.net/releases/2022.12.1/pyscript.js"></script> -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2023.11.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
+    
+    
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
@@ -17,16 +21,10 @@
 
 </head>
 
-<py-config type="json" src="./static/pyconfig.json">
-    {
-    "paths" : [
-    "./src/GTA_SA_Save_Game_Editor.py"
-    ]
-    }
-</py-config>
+<py-config src="./static/pyconfig.toml"></py-config>
 
 <body>
-    <style>
+    <!-- <style>
         .offcanvas,
         .offcanvas-xxl,
         .offcanvas-xl,
@@ -35,23 +33,23 @@
         .offcanvas-sm {
             --bs-offcanvas-width: 75%;
         }
-    </style>
+    </style> -->
 
-    <!-- <py-script>
+    <py-script>
         print("Hello World!")
-        import os, abc
+        import os
 
         print('/dev directory contents:')
         files = os.listdir('/home/pyodide')
         for file in files:
             print(file)
     </py-script>
-    <py-repl></py-repl> -->
 
 
 
     <nav class="navbar navbar-expand-lg border-bottom">
         <div class="container-fluid">
+            <!-- <img class=“navbar-brand” src="./static/images/icons/GTA_SA_Savegame_EditorPy_icon_x512.png" style="width: 100px;" alt="Logo"> -->
             <a class="fs-4 navbar-brand mx-4" href="/">GTA SA Save Game EditorPy</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
                 aria-controls="offcanvasExample" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,8 +140,8 @@
                     <div class="form-group mt-5">
                         <span id="wantedValue"></span>
                         <label for="">Wanted Level :
-                            <input onchange="showVal(this.value, 'wantedValue')" type="range" name="" id="wantedlevel"
-                                min="0" max="6">
+                            <input onchange="showVal(this.value, 'wantedValue')" type="range"
+                                name="" id="wantedlevel" min="0" max="6">
                         </label>
                     </div>
                     <div class="form-group mt-2">
@@ -186,7 +184,6 @@
         </form>
         <div id="output"></div>
     </div>
-    </div>
 
     <py-script src="/GTA_SA_Save_Game_EditorPy/static/py/main.py"></py-script>
     <script src="/GTA_SA_Save_Game_EditorPy/static/js/main.js"></script>
@@ -195,6 +192,32 @@
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
         crossorigin="anonymous"></script>
     <script src="./static/js/index.js"></script>
+    <py-script>
+        import os
+
+        def list_files(root_dir):
+          """
+          Lists all files in a directory recursively.
+      
+          Args:
+              root_dir: The directory to list files from.
+      
+          Returns:
+              A list of all files in the directory and its subdirectories.
+          """
+          files = []
+          for root, _, filenames in os.walk(root_dir):
+            for filename in filenames:
+              files.append(os.path.join(root, filename))
+          return files
+      
+        # Get the current directory
+        root_dir = os.getcwd()
+      
+        # Print each file path
+        for file in list_files(root_dir):
+          print(file)    
+    </py-script>
 </body>
 
 </html>

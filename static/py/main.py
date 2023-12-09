@@ -1,13 +1,6 @@
 from js import document, console, Uint8Array, window, File, alert
 
-
-
-import struct
-
-try:
-    from src.GTA_SA_Save_Game_Editor import SaveFileInfo as _SaveFileInfo, logging
-except:
-    from GTA_SA_Save_Game_Editor import SaveFileInfo as _SaveFileInfo, logging
+from GTA_SA_Save_Game_Editor import SaveFileInfo as _SaveFileInfo, logging
 
 
 class SaveFileInfo(_SaveFileInfo):

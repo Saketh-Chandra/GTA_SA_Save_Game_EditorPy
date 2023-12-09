@@ -4,3 +4,5 @@
 ## Test file ##
 dummy.py
 temp file.html
+*.b
+__pycache__/
