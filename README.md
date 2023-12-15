@@ -1,4 +1,3 @@
-"""
 # GTA SA (Grand Theft Auto: San Andreas) Save Game Editor in Python
 
 ## PWA Support [New]
@@ -46,3 +45,10 @@
 - iOS: `var/mobile/Containers/Data/Application/<random>/Documents/GTA San Andreas User Files` (Need Jailbreak)(Not Tested)
 - macOS: `~/Library/Application Support/Rockstar Games/GTA San Andreas User Files`(Not Tested)
 
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+## References
+- https://gtamods.com/wiki/Saves_(GTA_SA)
+- https://gtasa-savegame-editor.github.io/docs
+- https://gtamods.com/wiki/List_of_vehicles_(SA)
