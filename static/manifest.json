@@ -1,6 +1,12 @@
 {
   "name": "GTA: SA Savegame EditorPy",
-  "short_name": "GTA: SA Savegame EditorPy",
+  "short_name": "GTA: SA_Edit",
+  "categories": [
+    "games",
+    "utilities",
+    "education"
+  ],
+  "description": "GTA: SA Savegame EditorPy is a Python-based savegame editor for Grand Theft Auto: San Andreas.",
   "display": "standalone",
   "start_url": "/GTA_SA_Save_Game_EditorPy/",
   "scope": "/GTA_SA_Save_Game_EditorPy/",
@@ -17,6 +23,5 @@
       "sizes": "192x192",
       "purpose": "any maskable"
     }
-
   ]
 }

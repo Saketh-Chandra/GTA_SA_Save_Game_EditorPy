@@ -1,6 +1,7 @@
-from js import document, console, Uint8Array, window, File, alert
-
+from js import document, console, Uint8Array, window, File, alert, hide_py_error
+from pyscript import when
 from GTA_SA_Save_Game_Editor import SaveFileInfo as _SaveFileInfo, logging
+from random import randint
 
 
 class SaveFileInfo(_SaveFileInfo):
@@ -21,12 +22,13 @@ class SaveFileInfo(_SaveFileInfo):
         link.href = window.URL.createObjectURL(output_file)
         link.textContent = f"Download Save file: {filename}"
         link.download = filename
-        link.click()
-        console.log(link)
-        document.getElementById("output").appendChild(link)
+        link.click() 
+        li = document.createElement('li')
+        li.appendChild(link)
+        document.getElementById("linkList").appendChild(li)
 
 
-
+@when("click", "#GenerateFile")
 def main(*args, **kwargs):
     save = SaveFileInfo(filename=None)
 
@@ -57,7 +59,7 @@ def main(*args, **kwargs):
         pass
 
     for i in  document.getElementById('garage').selectedOptions:
-        save.GarageVehicle(location=i.value, vehicle_ID=411)
+        save.GarageVehicle(location=i.value, vehicle_ID=411, all_proof=True)
 
     health = document.getElementById("Health").checked
     if health:
@@ -89,5 +91,7 @@ def main(*args, **kwargs):
     stamina = int(document.getElementById("stamina").value)
     if stamina:
         save.Stamina(level=stamina*10)
-
-    save.savefile("GTASAsf5.b")
+    # Generate a random number between 1 and 5
+    num = randint(1, 5)
+    save.savefile(f"GTASAsf{num}.b")
+    hide_py_error()

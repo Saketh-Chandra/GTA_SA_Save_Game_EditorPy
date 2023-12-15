@@ -3,6 +3,6 @@
 
 ## Test file ##
 dummy.py
-temp file.html
+temp*
 *.b
 __pycache__/
