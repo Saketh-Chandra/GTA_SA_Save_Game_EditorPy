@@ -2,4 +2,24 @@
 .idea/**
 
 ## Test file ##
+dummy.py
 temp*
+*.b
+__pycache__/
+
+### react ###
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+.vite
+
+node_modules
+bower_components
+
+*.sublime*
+
+psd
+thumb
+sketch

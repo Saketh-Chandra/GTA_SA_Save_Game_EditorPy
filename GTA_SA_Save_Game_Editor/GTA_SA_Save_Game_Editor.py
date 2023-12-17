@@ -1,27 +1,12 @@
 import struct
 import logging
 from random import randint
-
+from .offsets import offsets
+from json import dumps
 logging.basicConfig(
     format='[%(levelname)s] |%(asctime)s| %(message)s',
-    level=logging.INFO,
+    level=logging.ERROR,
     datefmt='%Y-%m-%d %H:%M:%S')
-
-
-class offsets:
-    def __init__(self):
-        self.Money = []
-        self.InfiniteRun = None
-        self.Fireproof = None
-        self.Health = None
-        self.Armor = None
-        self.maxChaos = None
-        self.Fat = None
-        self.Stamina = None
-        self.Muscle = None
-        self.SexAppeal = None
-        self.roadblocks_SF = None
-        self.roadblocks_LV = None
 
 
 class SaveFileInfo:
@@ -91,45 +76,30 @@ class SaveFileInfo:
         address += 12
         self.data[address:address + 4] = struct.pack("<i", ammo)
 
-    def ThugSet(self, parachute=False, flowers=False):
-        self.weapon(0, 1)
-        self.weapon(1, 5)
-        self.weapon(2, 22)
-        self.weapon(3, 25)
-        self.weapon(4, 28)
-        self.weapon(5, 30)
-        self.weapon(7, 35)
-        self.weapon(8, 18)
-        self.weapon(9, 41)
+    def ThugSet(self, parachute=False, flowers=False, ammo=999999999):
+        weapon_ids = [1, 5, 22, 25, 28, 30, 35, 18, 41]
+        for index, weapon_id in enumerate(weapon_ids):
+            self.weapon(index, weapon_id, ammo=ammo)
+
         if flowers:
             self.weapon(10, 0x0E)
         if parachute:
             self.weapon(11, 0x2E)
 
-    def NutterSet(self, parachute=False, flowers=False):
-        self.weapon(1, 4)
-        self.weapon(2, 24)
-        self.weapon(3, 26)
-        self.weapon(4, 32)
-        self.weapon(5, 31)
-        self.weapon(6, 34)
-        self.weapon(7, 37)
-        self.weapon(8, 16)
-        self.weapon(9, 42)
+    def NutterSet(self, parachute=False, flowers=False, ammo=999999999):
+        weapon_ids = [4, 24, 26, 32, 31, 34, 37, 16, 42]
+        for index, weapon_id in enumerate(weapon_ids):
+            self.weapon(index, weapon_id, ammo=ammo)
         if flowers:
             self.weapon(10, 0x0E)
         if parachute:
             self.weapon(11, 0x2E)
 
-    def ProfessionalSet(self, parachute=False, flowers=False):
-        self.weapon(1, 9)
-        self.weapon(2, 23)
-        self.weapon(3, 27)
-        self.weapon(4, 29)
-        self.weapon(5, 31)
-        self.weapon(6, 34)
-        self.weapon(7, 36)
-        self.weapon(8, 39)
+    def ProfessionalSet(self, parachute=False, flowers=False, ammo=999999999):
+        weapon_ids = [9, 23, 27, 29, 31, 34, 36, 39]
+        for index, weapon_id in enumerate(weapon_ids):
+            self.weapon(index, weapon_id, ammo=ammo)
+
         if flowers:
             self.weapon(10, 0x0E)
         if parachute:
@@ -137,16 +107,20 @@ class SaveFileInfo:
 
     def Health(self, Health: float = float('inf')):
         logging.info(f"{Health=}")
-        self.data[self.offsets.Health:self.offsets.Health + 4] = struct.pack("<f", Health)
+        self.data[self.offsets.Health:self.offsets.Health +
+                  4] = struct.pack("<f", Health)
 
     def Armor(self, Armor: float = float('inf')):
         logging.info(f"{Armor=}")
-        self.data[self.offsets.Armor:self.offsets.Armor + 4] = struct.pack("<f", Armor)
+        self.data[self.offsets.Armor:self.offsets.Armor +
+                  4] = struct.pack("<f", Armor)
 
     def Money(self, Money: int = 999999999):
         logging.info(f"{Money=}")
-        self.data[self.offsets.Money[0]:self.offsets.Money[0] + 4] = struct.pack("<i", Money)
-        self.data[self.offsets.Money[1]:self.offsets.Money[1] + 4] = struct.pack("<i", Money)
+        self.data[self.offsets.Money[0]:self.offsets.Money[0] +
+                  4] = struct.pack("<i", Money)
+        self.data[self.offsets.Money[1]:self.offsets.Money[1] +
+                  4] = struct.pack("<i", Money)
 
     def InfiniteRun(self, InfRun: bool = True):
         logging.info(f"{InfRun=}")
@@ -160,31 +134,36 @@ class SaveFileInfo:
         if 0 <= Chaoslevel <= 6:
             Chaos = Chaoslevel * 1000
             logging.info(f"{Chaos=}")
-            self.data[self.offsets.maxChaos: self.offsets.maxChaos + 4] = struct.pack("<i", Chaos)
+            self.data[self.offsets.maxChaos: self.offsets.maxChaos +
+                      4] = struct.pack("<i", Chaos)
         else:
             raise Exception("Chaos level ranges from 0 to 6")
 
     def Fat(self, level: float = 0):
         if 0 <= level <= 1000:
-            self.data[self.offsets.Fat: self.offsets.Fat + 4] = struct.pack("<f", level)
+            self.data[self.offsets.Fat: self.offsets.Fat +
+                      4] = struct.pack("<f", level)
         else:
             raise Exception("Fat level ranges from 0 to 1000")
 
     def Stamina(self, level: float = 0):
         if 0 <= level <= 1000:
-            self.data[self.offsets.Stamina: self.offsets.Stamina + 4] = struct.pack("<f", level)
+            self.data[self.offsets.Stamina: self.offsets.Stamina +
+                      4] = struct.pack("<f", level)
         else:
             raise Exception("Stamina level ranges from 0 to 1000")
 
     def Muscle(self, level: float = 0):
         if 0 <= level <= 1000:
-            self.data[self.offsets.Muscle: self.offsets.Muscle + 4] = struct.pack("<f", level)
+            self.data[self.offsets.Muscle: self.offsets.Muscle +
+                      4] = struct.pack("<f", level)
         else:
             raise Exception("Muscle level ranges from 0 to 1000")
 
     def SexAppeal(self, level: float = 0):
         if 0 <= level <= 2000:
-            self.data[self.offsets.Stamina: self.offsets.Stamina + 4] = struct.pack("<f", level)
+            self.data[self.offsets.Stamina: self.offsets.Stamina +
+                      4] = struct.pack("<f", level)
         else:
             raise Exception("SexAppeal level ranges from 0 to 2000")
 
@@ -211,8 +190,10 @@ class SaveFileInfo:
             vec_rotation = [231, 96, 0]
             addr = self.blocks[3] + 0x2e7
         else:
-            logging.critical("Check this docs for Garage Names: https://gtasa-savegame-editor.github.io/docs/#/garages")
-            raise Exception("Check this docs for Garage Names: https://gtasa-savegame-editor.github.io/docs/#/garages")
+            logging.critical(
+                "Check this docs for Garage Names: https://gtasa-savegame-editor.github.io/docs/#/garages")
+            raise Exception(
+                "Check this docs for Garage Names: https://gtasa-savegame-editor.github.io/docs/#/garages")
         self.data[addr:addr + 4] = struct.pack("<f", garage[0])
         addr += 4
         self.data[addr:addr + 4] = struct.pack("<f", garage[1])
@@ -241,6 +222,7 @@ class SaveFileInfo:
             CarFlag = 255
         self.data[addr] = CarFlag
         addr += 2
+
         self.data[addr:addr + 2] = struct.pack("<h", vehicle_ID)
 
         if not vehicle_mods:
@@ -252,7 +234,8 @@ class SaveFileInfo:
             addr += 2
             self.data[addr:addr + 2] = struct.pack("<H", i)
         if not vehicle_colors:
-            vehicle_colors = [randint(0, 126), randint(0, 126), 0, 0]  # Generating Random Colors
+            vehicle_colors = [randint(0, 126), randint(
+                0, 126), 0, 0]  # Generating Random Colors
         addr += 1
         for i in vehicle_colors:
             addr += 1
@@ -279,6 +262,9 @@ class SaveFileInfo:
         self.data[addr] = 0x00  # align
 
     def BlockLocations(self):
+        """
+        Find the locations of all the blocks in the file
+        """
         for i in range(len(self.data) - 4):
             try:
                 if self.data[i:i + 1].decode("utf-8") == 'B':
@@ -306,22 +292,51 @@ class SaveFileInfo:
         with open(filename, "wb") as out:
             out.write(self.data)
 
-if __name__ == '__main__':
-    save = SaveFileInfo(filename="Save_Files/GTASAsf5.b")
-    save.Money(Money=1010101)
-    save.ProfessionalSet(parachute=True, flowers=True)
-    save.Fireproof()
-    save.InfiniteRun()
-    save.WantedLevel(Chaoslevel=0)
-    save.Health()
-    save.Armor()
-    save.GarageVehicle(location='cjsafe', vehicle_ID=502, nNitrous=10, all_proof=True)
-    save.GarageVehicle(location='CEsafe1', vehicle_ID=415, all_proof=True)
-    save.GarageVehicle(location='beacsv', vehicle_ID=415, nNitrous=10, all_proof=True)
-    save.Fat(level=0)
-    save.Muscle(level=999)
-    save.Stamina(level=999)
-    save.SexAppeal(level=1999)
-    save.RoadBlocksSF(False)
-    save.RoadBlocksLV(False)
-    save.savefile(filename="Save_Files/GTASAsf6.b")
+    # Get Save file Game info (Health, Armor, Money, etc) to a dictionary
+    def getSaveFileInfo(self, json=False):
+        data = {
+            "Health": struct.unpack("<f", self.data[self.offsets.Health:self.offsets.Health + 4])[0],
+            "Armor": struct.unpack("<f", self.data[self.offsets.Armor:self.offsets.Armor + 4])[0],
+            "Money": struct.unpack("<i", self.data[self.offsets.Money[0]:self.offsets.Money[0] + 4])[0],
+            "InfiniteRun": self.data[self.offsets.InfiniteRun],
+            "Fireproof": self.data[self.offsets.Fireproof],
+            "Fat": struct.unpack("<f", self.data[self.offsets.Fat: self.offsets.Fat + 4])[0],
+            "Stamina": struct.unpack("<f", self.data[self.offsets.Stamina: self.offsets.Stamina + 4])[0],
+            "Muscle": struct.unpack("<f", self.data[self.offsets.Muscle: self.offsets.Muscle + 4])[0],
+            "SexAppeal": struct.unpack("<f", self.data[self.offsets.SexAppeal: self.offsets.SexAppeal + 4])[0],
+            "roadblocks_SF": self.data[self.offsets.roadblocks_SF],
+            "roadblocks_LV": self.data[self.offsets.roadblocks_LV],
+            "weapon": [
+               {
+                   "weapon_id": struct.unpack("<i", self.data[self.blocks[2] + 44+(28*i):self.blocks[2] + 44+(28*i)+4])[0],
+                   "ammo": struct.unpack("<i", self.data[self.blocks[2] + 56+(28*i):self.blocks[2] + 60+(28*i)])[0]
+               } for i in range(13)
+            ],
+            "vehicle": [
+                {
+                    "location": [
+                        #    [self.blocks[3] + offset_addr + axis, self.blocks[3] + 0x27+4+ offset_addr  + axis]
+                        struct.unpack(
+                            "<f", self.data[self.blocks[3] + offset_addr + axis: self.blocks[3] + offset_addr + 4 + axis])[0]
+                        for axis in range(0, 12, 4)
+                    ],
+                    "vehicle_ID": struct.unpack("<h", self.data[self.blocks[3] + 0x12 + offset_addr:self.blocks[3] + 0x12 + offset_addr + 2])[0],
+                    "bulletproof": (self.data[self.blocks[3] + 0x10 + offset_addr] & 0x01) != 0,
+                    "fireproof": (self.data[self.blocks[3] + 0x10 + offset_addr] & 0x02) != 0,
+                    "explosion_proof": (self.data[self.blocks[3] + 0x10 + offset_addr] & 0x04) != 0,
+                    "collision_proof": (self.data[self.blocks[3] + 0x10 + offset_addr] & 0x08) != 0,
+                    "melee_proof": (self.data[self.blocks[3] + 0x10 + offset_addr] & 0x10) != 0,
+                    "bass_boost": (self.data[self.blocks[3] + 0x10 + offset_addr] & 0x20) != 0,
+                    "hydraulics": (self.data[self.blocks[3] + 0x10 + offset_addr] & 0x40) != 0,
+                    "nNitrous": (self.data[self.blocks[3] + 0x10 + offset_addr] & 0x80) != 0,
+                    "radio_station": self.data[self.blocks[3] + 0x10 + offset_addr],
+
+                } for offset_addr in [0x27, 0x67, 0x2e7]
+
+            ]
+
+
+        }
+        if json:
+            return dumps(data, indent=4)
+        return data
