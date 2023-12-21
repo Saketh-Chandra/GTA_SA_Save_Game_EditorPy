@@ -1,8 +1,8 @@
-terminal = false
+plugins = ["!error"]
+interpreter = "0.23.4"
 
-[splashscreen]
-autoclose = true
 
 [[fetch]]
-files = ["GTA_SA_Save_Game_Editor.py"]
-from = "https://raw.githubusercontent.com/Saketh-Chandra/GTA_SA_Save_Game_EditorPy/master/"
+files = ["GTA_SA_Save_Game_Editor.py", "__init__.py", "offsets.py"]
+from = "https://raw.githubusercontent.com/Saketh-Chandra/GTA_SA_Save_Game_EditorPy/dev/GTA_SA_Save_Game_Editor/"
+to_folder = "GTA_SA_Save_Game_Editor"

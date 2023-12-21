@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
-import Vehicle from './Vehicle'
+import React, { useState } from 'react';
+import { Typography, Select, MenuItem, InputLabel, Grid, Box, Chip } from '@mui/material';
+import Vehicle from './Vehicle';
+
 const garageList = ['Ganton garage (Grove St.)', 'Santa Maria Beach garage', 'Muholland garage'];
 const allVehicles = {
     "4": "Car",
     "2": "Bike",
-    
 };
 
 function Garage() {
@@ -14,47 +15,58 @@ function Garage() {
     const updateVehicle = (garage, vehicleData) => {
         setVehicles((prevVehicles) => ({
             ...prevVehicles,
-            [garage]: vehicleData
-        }))
-    }
-
-
+            [garage]: vehicleData,
+        }));
+    };
 
     return (
-        <div>
-            <h2>Garage Component</h2>
-            <div>
-                <label>Select Garages:</label>
-                <select multiple onChange={(e) => setSelectedGarages(Array.from(e.target.selectedOptions).map((opt) => opt.value))}>
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <Typography variant="h4">Garage Vehicle</Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+                <InputLabel>Select Garages:</InputLabel>
+                <Select
+                    multiple
+                    value={selectedGarages}
+                    onChange={(e) => setSelectedGarages(e.target.value)}
+                    displayEmpty
+                    fullWidth
+                    renderValue={(selected) => (
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                          {selected.map((value) => (
+                            <Chip key={value} label={value} />
+                          ))}
+                        </Box>
+                      )}
+                >
                     {garageList.map((garage) => (
-                        <option key={garage} value={garage}>
+                        <MenuItem key={garage} value={garage}>
                             {garage}
-                        </option>
+                        </MenuItem>
                     ))}
-                </select>
-            </div>
+                </Select>
+            </Grid>
 
             {selectedGarages.map((garage) => (
-                <div key={garage}>
-                    <h3>{garage}</h3>
+                <Grid item xs={12} md={6} key={garage}
+                
+                    >
                     <Vehicle
                         vehicles={allVehicles}
                         garage={garage}
                         vehicleData={vehicles[garage] || {
-                            "name": "",
-                            "fireProof": false,
-                            "bulletProof": false,
+                            name: "",
+                            fireProof: false,
+                            bulletProof: false,
                         }}
                         updateVehicle={updateVehicle}
-
                     />
-
-                </div>
+                </Grid>
             ))}
-        </div>
+        </Grid>
     );
 }
 
-
-
-export default Garage
+export default Garage;

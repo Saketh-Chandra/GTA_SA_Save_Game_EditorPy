@@ -1,6 +1,8 @@
 from js import document, console, Uint8Array, window, File, alert
-from pyscript import when
-from GTA_SA_Save_Game_Editor import SaveFileInfo as _SaveFileInfo, logging
+# from pyscript import when
+from GTA_SA_Save_Game_Editor import SaveFileInfo as _SaveFileInfo
+import logging
+from json import dumps
 from random import randint
 
 
@@ -17,21 +19,32 @@ class SaveFileInfo(_SaveFileInfo):
     def savefile(self, filename):
         self.writeChecksum()
         logging.info(f"Saving.... file:{filename}")
-        output_file = File.new([Uint8Array.new(self.data)], filename, {type: "application/octet-stream"})
+        output_file = File.new([Uint8Array.new(self.data)], filename, {
+                               type: "application/octet-stream"})
         link = document.createElement('a')
         link.href = window.URL.createObjectURL(output_file)
         link.textContent = f"Download Save file: {filename}"
         link.download = filename
-        link.click() 
-        li = document.createElement('li')
-        li.appendChild(link)
-        document.getElementById("linkList").appendChild(li)
+        link.click()
 
+
+def get_savefile_info():
+    save = SaveFileInfo(filename=None)
+    sava_file_data = save.getSaveFileInfo()
+    print(sava_file_data)
+    sava_file_data['Health'] = "inf" if sava_file_data['Health'] == float(
+        'inf') else sava_file_data['Health']
+    sava_file_data['Armor'] = "inf" if sava_file_data['Armor'] == float(
+        'inf') else sava_file_data['Armor']
+    # return sava_file_data
+    return dumps(sava_file_data)
 
 
 def main(*args, **kwargs):
     print(f"{args=}", f"{kwargs=}")
     save = SaveFileInfo(filename=None)
+    # sava_file_data = save.getSaveFileInfo()
+    # print(sava_file_data)
 
     # save.Money(Money=2020202)
     # save.ProfessionalSet(parachute=True)
@@ -51,4 +64,7 @@ def main(*args, **kwargs):
     num = randint(1, 5)
     save.savefile(f"GTASAsf{num}.b")
 
+
 window.main = main
+window.get_savefile_info = get_savefile_info
+# createObject(create_proxy(get_savefile_info), "get_savefile_info")
