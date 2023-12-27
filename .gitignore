@@ -22,3 +22,7 @@ bower_components
 psd
 thumb
 sketch
+
+### Vite ###
+dist
+build

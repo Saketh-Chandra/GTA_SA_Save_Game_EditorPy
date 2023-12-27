@@ -10,16 +10,18 @@
 // 9. Clothes (Clothes, Tattoo, Haircut)[Future Release]
 
 import React from 'react'
-import Home from './page/Home'
 import Navbar from './components/Navbar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import {
-  BrowserRouter as Router,
+  createBrowserRouter,
+  RouterProvider,
 } from "react-router-dom";
-import './App.css'
+import { store } from './store/store'
+import { Provider } from 'react-redux'
+import Home from './page/Home'
 
-// Create a custom theme
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -32,51 +34,28 @@ const theme = createTheme({
   typography: {
     fontFamily: 'Arial, sans-serif',
     h4: {
-      fontFamily: 'Impact, sans-serif', // Use Impact font for heading 4
+      fontFamily: 'Impact, sans-serif',
     },
   },
 });
 
-
-const gtaTheme = createTheme({
-  palette: {
-    primary: {
-      main: '#ff6600', // Orange
-    },
-    secondary: {
-      main: '#007bff', // Blue
-    },
-    background: {
-      default: '#000000', // Black
-    },
-    text: {
-      primary: '#ffffff', // White
-      secondary: '#ff6600', // Orange
-    },
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
   },
-  typography: {
-    fontFamily: 'Arial, sans-serif',
-    h4: {
-      fontFamily: 'Impact, sans-serif', // Use Impact font for heading 4
-    },
-  },
-});
-
-
-
-
-
+]);
 
 function App() {
 
   return (
-    <Router>
+    <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Navbar />
-        <Home />
+        <RouterProvider router={router} />
       </ThemeProvider>
-    </Router>
+    </Provider>
 
   )
 }

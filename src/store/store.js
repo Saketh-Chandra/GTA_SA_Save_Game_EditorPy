@@ -1,11 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit';
-// import settingsReducer from '../features/settings/Slice/settingsSlice'; // Import your reducer(s) here
+import { configureStore } from '@reduxjs/toolkit'
+import saveGameSlice from '../features/saveGameSlice'
 
-const store = configureStore({
-  reducer: {
-    // settings: settingsReducer, 
-    
-  },
-});
-
-export default store;
+export const store = configureStore({
+    reducer: {
+        saveGame: saveGameSlice,
+    },
+})

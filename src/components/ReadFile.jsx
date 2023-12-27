@@ -1,14 +1,76 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Container, Input, TextField, Typography, InputAdornment } from '@mui/material';
 import AttachmentIcon from '@mui/icons-material/Attachment';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    setFileName,
+    setHealth,
+    setArmor,
+    setMoney,
+    setInfiniteRun,
+    setWantedLevel,
+    setFireproof,
+    setFat,
+    setStamina,
+    setMuscle,
+    setSexAppeal,
+    setRoadBlocks_SF,
+    setRoadBlocks_LV,
+
+} from '../features/saveGameSlice';
+
+function convertToNumber(value) {
+    if (value === 'inf') {
+        return 999999999
+    } else {
+        return value
+    }
+}
 function ReadFile() {
+    const dispatch = useDispatch();
+
     const [filedata, setFiledata] = useState(null);
-    const [fileName, setFileName] = useState('');
+    const { fileName } = useSelector((state) => state.saveGame);
+
     window.filedata = filedata;
+
+    useEffect(() => {
+        console.info('window.getSaveFileInfo function is ready');
+        window.filedata = filedata;
+        console.log(filedata)
+        // Check if window.getSaveFileInfo is a function before calling it
+        if (typeof window.getSaveFileInfo === 'function') {
+            const data = window.getSaveFileInfo() || "{}"
+            const object_data = JSON.parse(data.toString())
+            console.log(object_data)
+
+            // General
+            dispatch(setHealth(convertToNumber(object_data.Health)))
+            dispatch(setArmor(convertToNumber(object_data.Armor)))
+            dispatch(setMoney(convertToNumber(object_data.Money)))
+            dispatch(setRoadBlocks_SF(!!object_data.roadblocks_SF))
+            dispatch(setRoadBlocks_LV(!!object_data.roadblocks_LV))
+
+            //Body
+            dispatch(setFat(convertToNumber(object_data.Fat)))
+            dispatch(setStamina(convertToNumber(object_data.Stamina)))
+            dispatch(setMuscle(convertToNumber(object_data.Muscle)))
+            dispatch(setSexAppeal(convertToNumber(object_data.SexAppeal)))
+            dispatch(setFireproof(!!object_data.Fireproof))
+            dispatch(setInfiniteRun(!!object_data.InfiniteRun))
+
+
+
+        } else {
+            // Handle the case where window.getSaveFileInfo is not a function
+            console.info('window.getSaveFileInfo function is not ready');
+        }
+
+    }, [filedata])
 
     const handleFile = (e) => {
         let textfile = e.target.files[0];
-        setFileName(textfile.name);
+        dispatch(setFileName(textfile.name))
         let reader = new FileReader();
         reader.readAsArrayBuffer(textfile);
         reader.onload = function (e) {

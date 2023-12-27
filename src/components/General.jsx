@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, Checkbox, FormControlLabel, Grid, Divider, Typography, InputAdornment } from '@mui/material';
 import ReadFile from './ReadFile';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
@@ -6,15 +7,32 @@ import SecurityIcon from '@mui/icons-material/Security';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import RotatingIcon from './utils/RotatingIcon';
-
+import {
+    setHealth,
+    setArmor,
+    setMoney,
+    setWantedLevel,
+    setRoadBlocks_SF,
+    setRoadBlocks_LV,
+} from '../features/saveGameSlice';
 
 function General() {
-    const [money, setMoney] = useState(0);
-    const [health, setHealth] = useState(0);
-    const [armor, setArmor] = useState(0);
-    const [wantedLevel, setWantedLevel] = useState(0);
-    const [roadLS_SF, setRoadLS_SF] = useState(false);
-    const [roadSF_LV, setRoadSF_LV] = useState(false);
+
+    const dispatch = useDispatch();
+
+    const {
+        health,
+        armor,
+        money,
+        wantedLevel,
+        roadBlocks_SF,
+        roadBlocks_LV
+    } = useSelector(state => state.saveGame);
+
+
+
+    console.log("health", health, "armor", armor, "money", money, "wantedLevel", wantedLevel, "roadBlocks_SF", roadBlocks_SF, "roadBlocks_LV", roadBlocks_LV)
+
 
     return (
         <div>
@@ -40,10 +58,14 @@ function General() {
                             </InputAdornment>
                         }}
 
-                        onChange={(e) => setMoney(e.target.value)}
+                        onChange={(e) => {
+                            dispatch(setMoney(e.target.value))
+                        }}
                         sx={{ margin: 1 }}
                     />
-                    <Button variant="contained" color="primary" onClick={() => setMoney(999999999)}>
+                    <Button variant="contained" color="primary" onClick={() => {
+                        dispatch(setMoney(999999999))
+                    }}>
                         Max Money
                     </Button>
                 </Grid>
@@ -64,10 +86,14 @@ function General() {
                             inputProps: { min: 0, max: 999999999 },
                             startAdornment: <InputAdornment position="start"><LocalHospitalIcon style={{ color: "red" }} /></InputAdornment>
                         }}
-                        onChange={(e) => setHealth(e.target.value)}
+                        onChange={(e) => {
+                            dispatch(setHealth(e.target.value))
+                        }}
                         sx={{ margin: 1 }}
                     />
-                    <Button variant="contained" color="primary" onClick={() => setHealth(999999999)}>
+                    <Button variant="contained" color="primary" onClick={() => {
+                        dispatch(setHealth(999999999))
+                    }}>
                         Max Health
                     </Button>
                 </Grid>
@@ -89,10 +115,14 @@ function General() {
                             startAdornment: <InputAdornment position="start"><SecurityIcon style={{ color: "gray" }} /></InputAdornment>
                         }}
 
-                        onChange={(e) => setArmor(e.target.value)}
+                        onChange={(e) => {
+                            dispatch(setArmor(e.target.value))
+                        }}
                         sx={{ margin: 1 }}
                     />
-                    <Button variant="contained" color="primary" onClick={() => setArmor(999999999)}>
+                    <Button variant="contained" color="primary" onClick={() => {
+                        dispatch(setArmor(999999999))
+                    }}>
                         Max Armor
                     </Button>
                 </Grid>
@@ -122,13 +152,19 @@ function General() {
                                 })()
                             } </InputAdornment>
                         }}
-                        onChange={(e) => setWantedLevel(e.target.value)}
+                        onChange={(e) => {
+                            dispatch(setWantedLevel(e.target.value))
+                        }}
                         sx={{ margin: 1 }}
                     />
-                    <Button variant="contained" color="primary" onClick={() => setWantedLevel(6)}>
+                    <Button variant="contained" color="primary" onClick={() => {
+                        dispatch(setWantedLevel(6))
+                    }}>
                         Max Wanted Level
                     </Button>
-                    <Button variant="contained" color="secondary" onClick={() => setWantedLevel(0)}>
+                    <Button variant="contained" color="secondary" onClick={() => {
+                        dispatch(setWantedLevel(0))
+                    }}>
                         Clear Wanted Level
                     </Button>
                 </Grid>
@@ -136,14 +172,28 @@ function General() {
 
                 <Grid item xs={12} container alignItems="center">
                     <FormControlLabel
-                        control={<Checkbox checked={roadLS_SF} onChange={(e) => setRoadLS_SF(e.target.checked)} id="roadLS_SF" />}
+                        control={
+                            <Checkbox
+                                checked={roadBlocks_SF}
+                                onChange={(e) => {
+                                    dispatch(setRoadBlocks_SF(e.target.checked))
+                                }}
+                                id="roadBlocks_SF" />
+                        }
                         label="Unblock/Block Roads between Los Santos and San Fierro"
                     />
                 </Grid>
 
                 <Grid item xs={12} container alignItems="center">
                     <FormControlLabel
-                        control={<Checkbox checked={roadSF_LV} onChange={(e) => setRoadSF_LV(e.target.checked)} id="roadSF_LV" />}
+                        control={
+                            <Checkbox
+                                checked={roadBlocks_LV}
+                                onChange={(e) => {
+                                    dispatch(setRoadBlocks_LV(e.target.checked))
+                                }}
+                                id="roadBlocks_LV" />
+                        }
                         label="Unblock/Block Roads between San Fierro and Las Venturas"
                     />
                 </Grid>

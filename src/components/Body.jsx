@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Typography, Slider, Checkbox, FormControlLabel, Grid, Divider } from '@mui/material';
+import {
+    setFat,
+    setMuscle,
+    setSexAppeal,
+    setStamina,
+    setFireproof,
+    setInfiniteRun,
+} from '../features/saveGameSlice';
 
 function Body() {
-    const [fat, setFat] = useState(0);
-    const [muscle, setMuscle] = useState(0);
-    const [sexAppeal, setSexAppeal] = useState(0);
-    const [stamina, setStamina] = useState(0);
-    // const [lungCapacity, setLungCapacity] = useState(0);
-    const [fireproof, setFireproof] = useState(false);
+    const dispatch = useDispatch();
+    const {
+        Fat,
+        Muscle,
+        SexAppeal,
+        Stamina,
+        Fireproof,
+        infiniteRun,
+    } = useSelector(state => state.saveGame);
+
+    console.log("Fireproof", Fireproof, "Fat", Fat, "Stamina", Stamina, "Muscle", Muscle, "SexAppeal", SexAppeal, "infiniteRun", infiniteRun)
+
 
     return (
         <div style={{ marginTop: 10 }}>
@@ -22,10 +37,12 @@ function Body() {
                     <Slider
                         id="fat"
                         name="fat"
-                        value={fat}
+                        valueLabelFormat={(value) => `${value / 10}%`}
+                        valueLabelDisplay="auto"
+                        value={Fat}
                         max={1000}
                         min={0}
-                        onChange={(e, value) => setFat(value)}
+                        onChange={(e) => dispatch(setFat(e.target.value))}
                     />
                 </Grid>
 
@@ -37,10 +54,12 @@ function Body() {
                     <Slider
                         id="muscle"
                         name="muscle"
-                        value={muscle}
+                        valueLabelFormat={(value) => `${value / 10}%`}
+                        value={Muscle}
                         max={1000}
                         min={0}
-                        onChange={(e, value) => setMuscle(value)}
+                        valueLabelDisplay="auto"
+                        onChange={(e) => dispatch(setMuscle(e.target.value))}
                     />
                 </Grid>
 
@@ -52,10 +71,12 @@ function Body() {
                     <Slider
                         id="sexAppeal"
                         name="sexAppeal"
-                        value={sexAppeal}
+                        valueLabelFormat={(value) => `${value / 20}%`}
+                        valueLabelDisplay="auto"
+                        value={SexAppeal}
                         max={2000}
                         min={0}
-                        onChange={(e, value) => setSexAppeal(value)}
+                        onChange={(e) => dispatch(setSexAppeal(e.target.value))}
                     />
                 </Grid>
 
@@ -67,10 +88,12 @@ function Body() {
                     <Slider
                         id="stamina"
                         name="stamina"
-                        value={stamina}
+                        valueLabelFormat={(value) => `${value / 10}%`}
+                        valueLabelDisplay="auto"
+                        value={Stamina}
                         max={1000}
                         min={0}
-                        onChange={(e, value) => setStamina(value)}
+                        onChange={(e) => dispatch(setStamina(e.target.value))}
                     />
                 </Grid>
 
@@ -85,14 +108,30 @@ function Body() {
                         value={lungCapacity}
                         max={1000}
                         min={0}
-                        onChange={(e, value) => setLungCapacity(value)}
+                        onChange={(e) => dispatch(setlungCapacity(e.target.value))}
                     />
                 </Grid> */}
 
                 <Grid item xs={12} md={6}>
                     <FormControlLabel
-                        control={<Checkbox id="fireproof" name="fireproof" checked={fireproof} onChange={(e) => setFireproof(e.target.checked)} />}
+                        control={
+                            <Checkbox
+                                id="fireproof"
+                                name="fireproof"
+                                checked={Fireproof}
+                                onChange={(e) => dispatch(setFireproof(e.target.checked))}
+                            />}
                         label="Fireproof"
+                    />
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                id="infiniteRun"
+                                name="infiniteRun"
+                                checked={infiniteRun}
+                                onChange={(e) => dispatch(setInfiniteRun(e.target.checked))}
+                            />}
+                        label="Infinite Run"
                     />
                 </Grid>
             </Grid>

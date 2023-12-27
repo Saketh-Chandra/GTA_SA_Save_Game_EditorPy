@@ -22,7 +22,6 @@ const Home = () => {
                     alignItems: 'center',
                     justifyContent: 'space-around',
                     marginTop: "2.5vh"
-
                 }}>
                 <Button variant="outlined" onClick={() => { window.main() }}>Generate Save File</Button>
 

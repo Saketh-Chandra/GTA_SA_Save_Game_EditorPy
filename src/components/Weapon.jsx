@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Typography, Select, MenuItem, Checkbox, FormControlLabel, Grid, InputLabel, Divider } from '@mui/material';
+import {
+    setWeaponSet,
+    setParachute,
+    setFlowers,
+} from '../features/saveGameSlice';
 
 function Weapon() {
-    const [weaponType, setWeaponType] = useState('');
-    const [parachute, setParachute] = useState(false);
-    const [flowers, setFlowers] = useState(false);
-    const weaponSet = [
+    const dispatch = useDispatch();
+    const {
+        weapon
+    } = useSelector((state) => state.saveGame);
+    console.log("weaponSet ",weapon.weaponSet)
+
+    const weaponSetList = [
         'Infinite Thug Weapon Set',
         'Infinite Nutter Weapon Set',
         'Infinite Professional Weapon Set',
@@ -20,16 +29,16 @@ function Weapon() {
                 <Grid item xs={12}>
                     <InputLabel>Weapon Type</InputLabel>
                     <Select
-                        value={weaponType}
-                        onChange={(e) => setWeaponType(e.target.value)}
+                        value={weapon.weaponSet}
+                        onChange={(e) => { dispatch(setWeaponSet(e.target.value)) }}
                         displayEmpty
                         inputProps={{ 'aria-label': 'Weapon Type' }}
                         fullWidth
                     >
                         <MenuItem value="" disabled>
-                        <em>Select Weapon Type</em>
+                            <em>Select Weapon Type</em>
                         </MenuItem>
-                        {weaponSet.map((weapon, index) => (
+                        {weaponSetList.map((weapon, index) => (
                             <MenuItem key={index} value={weapon}>
                                 {weapon}
                             </MenuItem>
@@ -40,14 +49,14 @@ function Weapon() {
 
                 <Grid item xs={6}>
                     <FormControlLabel
-                        control={<Checkbox id="parachute" name="parachute" checked={parachute} onChange={(e) => setParachute(e.target.checked)} />}
+                        control={<Checkbox id="parachute" name="parachute" checked={weapon.parachute} onChange={(e) => { dispatch(setParachute(e.target.checked)) }} />}
                         label="Parachute"
                     />
                 </Grid>
 
                 <Grid item xs={6}>
                     <FormControlLabel
-                        control={<Checkbox id="flowers" name="flowers" checked={flowers} onChange={(e) => setFlowers(e.target.checked)} />}
+                        control={<Checkbox id="flowers" name="flowers" checked={weapon.flowers} onChange={(e) => { dispatch(setFlowers(e.target.checked)) }} />}
                         label="Flowers"
                     />
                 </Grid>

@@ -5,9 +5,15 @@ import logging
 from json import dumps
 from random import randint
 
+logging.basicConfig(
+    format='[%(levelname)s] |%(asctime)s| %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
+
 
 class SaveFileInfo(_SaveFileInfo):
     def processFile(self):
+        # JS Global Variable
         filedata = window.filedata
         if filedata:
             logging.info("File Processing...")
@@ -31,7 +37,7 @@ class SaveFileInfo(_SaveFileInfo):
 def get_savefile_info():
     save = SaveFileInfo(filename=None)
     sava_file_data = save.getSaveFileInfo()
-    print(sava_file_data)
+    # print(sava_file_data)
     sava_file_data['Health'] = "inf" if sava_file_data['Health'] == float(
         'inf') else sava_file_data['Health']
     sava_file_data['Armor'] = "inf" if sava_file_data['Armor'] == float(
@@ -66,5 +72,5 @@ def main(*args, **kwargs):
 
 
 window.main = main
-window.get_savefile_info = get_savefile_info
+window.getSaveFileInfo = get_savefile_info
 # createObject(create_proxy(get_savefile_info), "get_savefile_info")
