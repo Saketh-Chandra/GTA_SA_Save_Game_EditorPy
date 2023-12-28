@@ -1,20 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     Typography,
-    Select,
-    MenuItem,
-    InputLabel,
-    Grid, Box,
-    Chip, Checkbox,
-    ListItemText,
+    Grid,
     Button
 } from '@mui/material';
 import {
-    setSelectedGarages,
     addVehicle,
-    removeVehicle,
-    updateVehicle,
 } from '../features/saveGameSlice';
 import Vehicle from './Vehicle';
 import { garageList } from './utils/vehichles';

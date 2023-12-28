@@ -4,7 +4,7 @@ import General from '../components/General';
 import Body from '../components/Body';
 import Weapon from '../components/Weapon';
 import Garage from '../components/Garage';
-
+import SaveFileDownload from '../components/SaveFileDownload';
 
 
 
@@ -16,17 +16,10 @@ const Home = () => {
             <Body />
             <Weapon />
             <Garage />
-            <Container
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-around',
-                    marginTop: "2.5vh",
-                    marginBottom: "2.5vh"
-                }}>
-                <Button variant="outlined" onClick={() => { window.main() }}>Generate Save File</Button>
 
-            </Container>
+            <SaveFileDownload />
+
+
         </Container>
     );
 };
