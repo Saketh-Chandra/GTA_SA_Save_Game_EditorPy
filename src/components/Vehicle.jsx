@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Card,
   CardContent,
@@ -12,36 +13,99 @@ import {
   Select,
   Typography,
   Autocomplete,
-  TextField
+  TextField,
+  ListItemText,
+  Button,
 } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import {
   vehiclesList,
-  radioStations
+  radioStations,
+  garageList,
 } from './utils/vehichles';
 
-function Vehicle({ garage, vehicleData, updateVehicle },) {
+import {
+  removeVehicle,
+  updateVehicle,
+} from '../features/saveGameSlice';
+
+function Vehicle({ vehicleData, index }) {
+
+  const dispatch = useDispatch();
+
   const handleVehicleChange = ({ target: { name, value, checked } }) => {
-    if (name !== 'id' && name !== 'radioStation') {
+    if (name !== 'id' && name !== 'radioStation' && name !== 'location') {
       value = checked;
     }
     if (name === 'radioStation') {
       value = parseInt(value);
     }
-    updateVehicle(garage.garageName, {
+
+
+
+    const updatedvehicleData = {
       ...vehicleData,
-      [name]: value,
-    });
+      [name]: value
+    }
+
+    dispatch(updateVehicle({ index, vehicles: updatedvehicleData }));
   };
-  console.log("Vid", vehiclesList[vehicleData.id])
-  console.log(vehicleData)
+
+  console.log("vehicleData", vehicleData)
+
   return (
     <Card>
-      <CardHeader title={`Garage: ${garage.garageName}`} />
+      <CardHeader title={
+
+        <div style={
+          {
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+
+          }
+        }>
+          <Typography variant="h5">
+            {vehicleData.id ? `Vehicle ${vehiclesList[vehicleData.id]}` : 'Select a Vehicle'}
+          </Typography>
+          <Button onClick={() => { dispatch(removeVehicle(index)) }} style={{ margin: "-0.5vh" }}>
+            <DeleteIcon sx={{
+              color: "red",
+
+            }} />
+          </Button>
+        </div>
+      }
+
+      />
       <CardContent>
+
+
         <Grid container spacing={2}>
+
           <Grid item xs={12}>
-            <Typography variant="h6">Select Vehicle:</Typography>
+            <InputLabel >Select Garages:</InputLabel>
+            <Select
+              value={vehicleData.location}
+              label="Select Garages"
+              onChange={handleVehicleChange}
+              displayEmpty
+              fullWidth
+              inputProps={{ name: 'location', id: 'location' }}
+            >
+              <MenuItem value="" disabled>
+              </MenuItem>
+              {garageList.map((garage) => (
+                <MenuItem key={garage.garageName} value={garage.locationCoordinates}>
+                  <ListItemText primary={garage.garageName} />
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+          <Grid item xs={12}>
+            <InputLabel>Select Vehicle:</InputLabel>
+
             <FormControl fullWidth>
               {/* <InputLabel htmlFor="vehicle-name">Vehicle</InputLabel> */}
               <Autocomplete
@@ -50,7 +114,7 @@ function Vehicle({ garage, vehicleData, updateVehicle },) {
                 value={Object.keys(vehiclesList).includes(vehicleData.id) ? { id: vehicleData.id, name: vehiclesList[vehicleData.id] } : null}
                 onChange={(_, newValue) => handleVehicleChange({ target: { name: 'id', value: newValue ? newValue.id : '' } })}
                 renderInput={(params) => (
-                  <TextField {...params} label="Select a Vehicle" />
+                  <TextField {...params} />
                 )}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
               />

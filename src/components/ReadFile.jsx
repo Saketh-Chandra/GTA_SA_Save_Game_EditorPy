@@ -16,6 +16,8 @@ import {
     setSexAppeal,
     setRoadBlocks_SF,
     setRoadBlocks_LV,
+    setVehicle,
+
 
 } from '../features/saveGameSlice';
 
@@ -58,6 +60,44 @@ function ReadFile() {
             dispatch(setSexAppeal(convertToNumber(object_data.SexAppeal)))
             dispatch(setFireproof(!!object_data.Fireproof))
             dispatch(setInfiniteRun(!!object_data.InfiniteRun))
+
+            //Vehicle
+            console.log("object_data vehicle", object_data.vehicle)
+
+            const vehicles = object_data.vehicle.map((vehicle) => {
+                return {
+                    location: vehicle.location,
+                    id: vehicle.vehicle_ID,
+                    bulletProof: !!vehicle.bulletproof,
+                    fireProof: !!vehicle.fireproof,
+                    explosionProof: !!vehicle.explosion_proof,
+                    collisionProof: !!vehicle.collision_proof,
+                    meleeProof: !!vehicle.melee_proof,
+                    bassBoost: !!vehicle.bass_boost,
+                    hydraulics: !!vehicle.hydraulics,
+                    nNitrous: !!vehicle.nNitrous,
+                    radioStation: vehicle.radio_station,
+                }
+
+
+            })
+            console.log(vehicles)
+
+            // let vehicle = {
+            //     location: "location",
+            //     id: "vehicle_ID",
+            //     bulletProof: "bulletproof",
+            //     fireProof: "fireproof",
+            //     explosionProof: "explosion_proof",
+            //     collisionProof: "collision_proof",
+            //     meleeProof: "melee_proof",
+            //     bassBoost: "bass_boost",
+            //     hydraulics: "hydraulics",
+            //     nNitrous: "nNitrous",
+            //     radioStation: "radio_station",
+
+            // }
+            dispatch(setVehicle(vehicles))
 
 
 

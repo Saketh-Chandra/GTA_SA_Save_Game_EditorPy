@@ -21,7 +21,21 @@ const initialState =
         flowers: false
     },
     selectedGarages: [],
-    vehicle: [],
+    vehicles: [
+        // {
+        //     id: '',
+        //     fireProof: false,
+        //     location: [],
+        //     bulletProof: false,
+        //     explosionProof: false,
+        //     collisionProof: false,
+        //     meleeProof: false,
+        //     bassBoost: false,
+        //     hydraulics: false,
+        //     nNitrous: false,
+        //     radioStation: 0,
+        // }
+    ],
 }
 
 
@@ -80,14 +94,31 @@ export const saveGame = createSlice({
         setSelectedGarages: (state, action) => {
             state.selectedGarages = action.payload
         },
-        addVehicle(state, action) {
-            state.vehicle.push(action.payload)
+        addVehicle(state,) {
+            state.vehicles.push(
+                {
+                    id: '',
+                    location: [],
+                    fireProof: false,
+                    bulletProof: false,
+                    explosionProof: false,
+                    collisionProof: false,
+                    meleeProof: false,
+                    bassBoost: false,
+                    hydraulics: false,
+                    nNitrous: false,
+                    radioStation: 0,
+                }
+            )
         },
         removeVehicle(state, action) {
-            state.vehicle.splice(action.payload, 1)
+            state.vehicles.splice(action.payload, 1)
         },
         updateVehicle(state, action) {
-            state.vehicle[action.payload.index] = action.payload.vehicle
+            state.vehicles[action.payload.index] = action.payload.vehicles
+        },
+        setVehicle(state, action) {
+            state.vehicles = action.payload
         },
         reset: (state) => {
             state = initialState
@@ -119,6 +150,7 @@ export const {
     addVehicle,
     removeVehicle,
     updateVehicle,
+    setVehicle,
     reset
 } = saveGame.actions
 

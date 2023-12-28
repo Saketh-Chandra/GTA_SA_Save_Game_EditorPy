@@ -32,7 +32,7 @@ function Weapon() {
                         value={weapon.weaponSet}
                         onChange={(e) => { dispatch(setWeaponSet(e.target.value)) }}
                         displayEmpty
-                        inputProps={{ 'aria-label': 'Weapon Type' }}
+                        inputProps={{ 'aria-label': 'Weapon Type',  }}
                         fullWidth
                     >
                         <MenuItem value="" disabled>
