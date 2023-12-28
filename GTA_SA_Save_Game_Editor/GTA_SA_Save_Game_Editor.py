@@ -18,6 +18,18 @@ class SaveFileInfo:
         self.offsets = offsets()
         self.BlockLocations()
         self.CheatLocations()
+        self.garage = {
+            # Name and coordinates round(x, y, z) (x, y, z)
+            "cjsafe": {
+                "round_coordinates": [2506, -1695, 13], "coordinates": (2505.847, -1695.321, 13.27919), "rotation": [252, 99, 0], "address_offset": 0x27
+            },
+            "beacsv": {
+                "round_coordinates": [323, -1765, 4], "coordinates": (322.7532, -1764.683, 4.300942), "rotation": [251, 157, 2], "address_offset": 0x67
+            },
+            "CEsafe1": {
+                "round_coordinates": [1355, -632, 109], "coordinates": (1354.678, -631.5799, 108.8764), "rotation": [231, 96, 0], "address_offset": 0x2e7
+            }
+        }
 
     def CheatLocations(self):
         # Block 0
@@ -177,23 +189,15 @@ class SaveFileInfo:
                       nNitrous=1, bulletproof=False, fireproof=False, explosion_proof=False,
                       collision_proof=False, melee_proof=False,
                       bass_boost=False, hydraulics=False, all_proof=False):
-        if location == 'cjsafe':
-            garage = (2505.847, -1695.321, 13.27919)
-            vec_rotation = [252, 99, 0]
-            addr = self.blocks[3] + 0x27
-        elif location == 'beacsv':
-            garage = (322.7532, -1764.683, 4.300942)
-            vec_rotation = [251, 157, 2]
-            addr = self.blocks[3] + 0x67
-        elif location == 'CEsafe1':
-            garage = (1354.678, -631.5799, 108.8764)
-            vec_rotation = [231, 96, 0]
-            addr = self.blocks[3] + 0x2e7
+        if location in self.garage.keys():
+            garage = self.garage.get(location, {}).get("coordinates")
+            vec_rotation = self.garage.get(location, {}).get("rotation")
+            addr = self.blocks[3] + \
+                self.garage.get(location, {}).get("address_offset")
         else:
-            logging.critical(
-                "Check this docs for Garage Names: https://gtasa-savegame-editor.github.io/docs/#/garages")
-            raise Exception(
-                "Check this docs for Garage Names: https://gtasa-savegame-editor.github.io/docs/#/garages")
+            msg = f"Garage location {location} not found and available garage locations are {self.garage.keys()}"
+            logging.critical(msg)
+            raise Exception(msg)
         self.data[addr:addr + 4] = struct.pack("<f", garage[0])
         addr += 4
         self.data[addr:addr + 4] = struct.pack("<f", garage[1])
@@ -230,9 +234,10 @@ class SaveFileInfo:
                             0xffff,
                             0xffff,
                             0xffff, 0xffff]  # 0xffff Don't apply any vehicle mods
-        for i in vehicle_mods:
-            addr += 2
-            self.data[addr:addr + 2] = struct.pack("<H", i)
+
+        self.data[addr+2:addr+32] = struct.pack("<15H", *vehicle_mods)
+        addr += 30
+
         if not vehicle_colors:
             vehicle_colors = [randint(0, 126), randint(
                 0, 126), 0, 0]  # Generating Random Colors
@@ -292,6 +297,12 @@ class SaveFileInfo:
         with open(filename, "wb") as out:
             out.write(self.data)
 
+    def get_garage_name_from_location(self, location):
+        for garage_name, garage_location in self.garage.items():
+            if garage_location.get("round_coordinates") == location:
+                return garage_name
+        return "Unknown"
+
     # Get Save file Game info (Health, Armor, Money, etc) to a dictionary
     def getSaveFileInfo(self, json=False):
         data = {
@@ -314,12 +325,13 @@ class SaveFileInfo:
             ],
             "vehicle": [
                 {
-                    "location": [
-                        #    [self.blocks[3] + offset_addr + axis, self.blocks[3] + 0x27+4+ offset_addr  + axis]
-                        struct.unpack(
-                            "<f", self.data[self.blocks[3] + offset_addr + axis: self.blocks[3] + offset_addr + 4 + axis])[0]
-                        for axis in range(0, 12, 4)
-                    ],
+                    "location": self.get_garage_name_from_location(
+                        [
+                            round(struct.unpack(
+                                "<f", self.data[self.blocks[3] + offset_addr + axis: self.blocks[3] + offset_addr + 4 + axis])[0])
+                            for axis in range(0, 12, 4)
+                        ]
+                    ),
                     "vehicle_ID": struct.unpack("<h", self.data[self.blocks[3] + 0x12 + offset_addr:self.blocks[3] + 0x12 + offset_addr + 2])[0],
                     "bulletproof": (self.data[self.blocks[3] + 0x10 + offset_addr] & 0x01) != 0,
                     "fireproof": (self.data[self.blocks[3] + 0x10 + offset_addr] & 0x02) != 0,
@@ -329,7 +341,7 @@ class SaveFileInfo:
                     "bass_boost": (self.data[self.blocks[3] + 0x10 + offset_addr] & 0x20) != 0,
                     "hydraulics": (self.data[self.blocks[3] + 0x10 + offset_addr] & 0x40) != 0,
                     "nNitrous": (self.data[self.blocks[3] + 0x10 + offset_addr] & 0x80) != 0,
-                    "radio_station": self.data[self.blocks[3] + 0x10 + offset_addr],
+                    "radio_station": self.data[self.blocks[3] + 0x36 + offset_addr],
 
                 } for offset_addr in [0x27, 0x67, 0x2e7]
 
