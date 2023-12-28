@@ -1,12 +1,12 @@
 export const garageList = [
     {
-        garageName: 'Ganton garage (Grove St.)', locationCoordinates: [2505.846923828125, -1695.321044921875, 13.279190063476562]
+        garageName: 'Ganton garage (Grove St.)', garageID:"cjsafe"
     },
     {
-        garageName: 'Santa Maria Beach garage', locationCoordinates: [322.7532043457031, -1764.6829833984375, 4.3009419441223145]
+        garageName: 'Santa Maria Beach garage', garageID:"beacsv"
     },
     {
-        garageName: 'Muholland garage', locationCoordinates: [1354.677978515625, -631.5798950195312, 108.87640380859375]
+        garageName: 'Muholland garage', garageID:"CEsafe1"
     }
 ];
 

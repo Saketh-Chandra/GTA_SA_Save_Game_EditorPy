@@ -33,7 +33,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: 'Arial, sans-serif',
-    h4: {
+    h5: {
       fontFamily: 'Impact, sans-serif',
     },
   },

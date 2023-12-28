@@ -26,7 +26,7 @@ function Body() {
 
     return (
         <div style={{ marginTop: 10 }}>
-            <Typography variant="h4">Body</Typography>
+            <Typography variant="h5">Body</Typography>
 
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>

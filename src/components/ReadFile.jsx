@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, Container, Input, TextField, Typography, InputAdornment } from '@mui/material';
+import { Button, Container, Input, TextField, Typography, InputAdornment, useMediaQuery, } from '@mui/material';
 import AttachmentIcon from '@mui/icons-material/Attachment';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -123,16 +123,18 @@ function ReadFile() {
         };
 
     }
+    const isMobile = useMediaQuery('(max-width:600px)');
     return (
 
 
 
         <div style={{
             display: 'flex',
-            flexDirection: 'row',
+            flexDirection: isMobile ? 'column' : 'row',
             alignItems: 'center',
             justifyContent: 'center',
             gap: 10,
+            padding: isMobile ? '10px' : '0',
         }}>
             <Typography variant="h6">Upload Save file:</Typography>
 

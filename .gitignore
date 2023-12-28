@@ -26,3 +26,4 @@ sketch
 ### Vite ###
 dist
 build
+.vite/deps

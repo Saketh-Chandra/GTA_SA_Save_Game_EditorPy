@@ -36,7 +36,7 @@ function General() {
 
     return (
         <div>
-            <Typography variant="h4">General</Typography>
+            <Typography variant="h5">General</Typography>
             <ReadFile />
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6} container
@@ -141,28 +141,29 @@ function General() {
                         fullWidth
                         InputProps={{
                             inputProps: { min: 0, max: 6 },
-                            startAdornment: <InputAdornment position="start"> {
-                                // show stars based on wanted level
-                                (() => {
-                                    let stars = [];
-                                    for (let i = 0; i < wantedLevel; i++) {
-                                        stars.push(<StarHalfIcon key={`star_${i}`} style={{ color: "gold" }} />);
-                                    }
-                                    return stars;
-                                })()
-                            } </InputAdornment>
+                            
+                            endAdornment: <InputAdornment position="start"> {
+                                Array.from({ length: 6 }).map((_, index) => (
+                                    <StarHalfIcon
+                                        key={`star_${index}`}
+                                        style={{
+                                            color: index < wantedLevel ? 'gold' : 'gray',
+                                        }}
+                                    />
+                                ))}
+                            </InputAdornment>
                         }}
                         onChange={(e) => {
                             dispatch(setWantedLevel(e.target.value))
                         }}
                         sx={{ margin: 1 }}
                     />
-                    <Button variant="contained" color="primary" onClick={() => {
+                    <Button variant="contained" sx={{ margin: 1 }} color="primary" onClick={() => {
                         dispatch(setWantedLevel(6))
                     }}>
                         Max Wanted Level
                     </Button>
-                    <Button variant="contained" color="secondary" onClick={() => {
+                    <Button variant="contained" sx={{ margin: 1 }} color="secondary" onClick={() => {
                         dispatch(setWantedLevel(0))
                     }}>
                         Clear Wanted Level

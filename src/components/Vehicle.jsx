@@ -35,6 +35,7 @@ function Vehicle({ vehicleData, index }) {
   const dispatch = useDispatch();
 
   const handleVehicleChange = ({ target: { name, value, checked } }) => {
+    console.log("name", name, "value", value, "checked", checked)
     if (name !== 'id' && name !== 'radioStation' && name !== 'location') {
       value = checked;
     }
@@ -52,7 +53,7 @@ function Vehicle({ vehicleData, index }) {
     dispatch(updateVehicle({ index, vehicles: updatedvehicleData }));
   };
 
-  console.log("vehicleData", vehicleData)
+  // console.log("vehicleData", vehicleData)
 
   return (
     <Card>
@@ -66,13 +67,12 @@ function Vehicle({ vehicleData, index }) {
 
           }
         }>
-          <Typography variant="h5">
+          <Typography variant="h6">
             {vehicleData.id ? `Vehicle ${vehiclesList[vehicleData.id]}` : 'Select a Vehicle'}
           </Typography>
           <Button onClick={() => { dispatch(removeVehicle(index)) }} style={{ margin: "-0.5vh" }}>
             <DeleteIcon sx={{
               color: "red",
-
             }} />
           </Button>
         </div>
@@ -97,7 +97,7 @@ function Vehicle({ vehicleData, index }) {
               <MenuItem value="" disabled>
               </MenuItem>
               {garageList.map((garage) => (
-                <MenuItem key={garage.garageName} value={garage.locationCoordinates}>
+                <MenuItem key={garage.garageName} value={garage.garageID}>
                   <ListItemText primary={garage.garageName} />
                 </MenuItem>
               ))}
@@ -107,22 +107,19 @@ function Vehicle({ vehicleData, index }) {
             <InputLabel>Select Vehicle:</InputLabel>
 
             <FormControl fullWidth>
-              {/* <InputLabel htmlFor="vehicle-name">Vehicle</InputLabel> */}
               <Autocomplete
-                options={Object.entries(vehiclesList).map(([id, name]) => ({ id, name }))}
-                getOptionLabel={(option) => option.name}
-                value={Object.keys(vehiclesList).includes(vehicleData.id) ? { id: vehicleData.id, name: vehiclesList[vehicleData.id] } : null}
-                onChange={(_, newValue) => handleVehicleChange({ target: { name: 'id', value: newValue ? newValue.id : '' } })}
-                renderInput={(params) => (
-                  <TextField {...params} />
-                )}
-                isOptionEqualToValue={(option, value) => option.id === value.id}
+                options={Object.values(vehiclesList)}
+                getOptionLabel={(option) => option}
+                value={vehiclesList[vehicleData.id] || null}
+                onChange={(_, value) => handleVehicleChange({ target: { name: 'id', value: Object.keys(vehiclesList).find(key => vehiclesList[key] === value) } })}
+                renderInput={(params) => <TextField {...params} />}
               />
             </FormControl>
           </Grid>
 
           <Grid item xs={12}>
-            <Typography variant="h6">Additional Options:</Typography>
+
+            <InputLabel>Additional Options:</InputLabel>
 
             <FormControlLabel
               control={
@@ -172,13 +169,13 @@ function Vehicle({ vehicleData, index }) {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={vehicleData.nitrous}
+                  checked={vehicleData.nNitrous}
                   onChange={handleVehicleChange}
-                  name="nitrous"
+                  name="nNitrous"
                   color="primary"
                 />
               }
-              label="Bullet Proof"
+              label="Nitrous"
             />
             <FormControlLabel
               control={

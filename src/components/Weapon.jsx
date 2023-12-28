@@ -22,7 +22,7 @@ function Weapon() {
 
     return (
         <div style={{ marginTop: 10 }}>
-            <Typography variant="h4">Weapon</Typography>
+            <Typography variant="h5">Weapon</Typography>
 
             <Grid container spacing={2}>
 
