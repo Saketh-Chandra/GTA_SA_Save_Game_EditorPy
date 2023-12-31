@@ -9,7 +9,7 @@ import {
     addVehicle,
 } from '../features/saveGameSlice';
 import Vehicle from './Vehicle';
-import { garageList } from './utils/vehichles';
+import Navigation from './Navigation';
 
 
 function Garage() {
@@ -20,34 +20,37 @@ function Garage() {
 
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12}>
-                <Typography variant="h5">
-                    Vehicles & Garages
-                </Typography>
-            </Grid>
+        <>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Typography variant="h5">
+                        Vehicles & Garages
+                    </Typography>
+                </Grid>
 
-            {
-                vehicles.map((vehicle, index) => (
-                    <Grid item xs={12} md={6} key={index} >
+                {
+                    vehicles.map((vehicle, index) => (
+                        <Grid item xs={12} md={6} key={index} >
 
-                        <Vehicle
-                            vehicleData={vehicle}
-                            index={index}
+                            <Vehicle
+                                vehicleData={vehicle}
+                                index={index}
 
-                        />
-                    </Grid>
-                ))
-            }
-            <Grid item xs={12}>
-                <Button variant="contained" color="primary" onClick={() => {
-                    dispatch(addVehicle())
+                            />
+                        </Grid>
+                    ))
                 }
-                }>
-                    Add Vehicle
-                </Button>
+                <Grid item xs={12}>
+                    <Button variant="contained" color="primary" onClick={() => {
+                        dispatch(addVehicle())
+                    }
+                    }>
+                        Add Vehicle
+                    </Button>
+                </Grid>
             </Grid>
-        </Grid>
+            <Navigation />
+        </>
     );
 }
 

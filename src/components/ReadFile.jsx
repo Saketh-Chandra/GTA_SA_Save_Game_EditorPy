@@ -20,6 +20,7 @@ import {
 
 
 } from '../features/saveGameSlice';
+import { UploadFile } from '@mui/icons-material';
 
 function convertToNumber(value) {
     if (value === 'inf') {
@@ -31,14 +32,13 @@ function convertToNumber(value) {
 function ReadFile() {
     const dispatch = useDispatch();
 
-    const [filedata, setFiledata] = useState(null);
+    // const [filedata, setFiledata] = useState(null);
+    let filedata = null;
     const { fileName } = useSelector((state) => state.saveGame);
 
-    window.filedata = filedata;
-
-    useEffect(() => {
+    const handleFileState = (filedata) => {
         console.info('window.getSaveFileInfo function is ready');
-        window.filedata = filedata;
+
         console.log(filedata)
         // Check if window.getSaveFileInfo is a function before calling it
         if (typeof window.getSaveFileInfo === 'function') {
@@ -83,20 +83,7 @@ function ReadFile() {
             })
             console.log(vehicles)
 
-            // let vehicle = {
-            //     location: "location",
-            //     id: "vehicle_ID",
-            //     bulletProof: "bulletproof",
-            //     fireProof: "fireproof",
-            //     explosionProof: "explosion_proof",
-            //     collisionProof: "collision_proof",
-            //     meleeProof: "melee_proof",
-            //     bassBoost: "bass_boost",
-            //     hydraulics: "hydraulics",
-            //     nNitrous: "nNitrous",
-            //     radioStation: "radio_station",
 
-            // }
             dispatch(setVehicle(vehicles))
 
 
@@ -106,7 +93,7 @@ function ReadFile() {
             console.info('window.getSaveFileInfo function is not ready');
         }
 
-    }, [filedata])
+    }
 
     const handleFile = (e) => {
         let textfile = e.target.files[0];
@@ -115,7 +102,9 @@ function ReadFile() {
         reader.readAsArrayBuffer(textfile);
         reader.onload = function (e) {
             var arrayBuffer = e.target.result;
-            setFiledata(new Uint8Array(arrayBuffer))
+            filedata = new Uint8Array(arrayBuffer)
+            window.filedata = filedata;
+            handleFileState(filedata);
 
         };
         reader.onerror = function () {
@@ -138,15 +127,7 @@ function ReadFile() {
         }}>
             <Typography variant="h6">Upload Save file:</Typography>
 
-            {/* <Input
-                type="file"
-                accept=".b"
-                id="bfile"
-                name="textfile"
-                onChange={handleFile}
-                // style={{ display: 'none' }}
-                inputProps={{ multiple: false }}
-            /> */}
+
 
             <TextField
                 id="filename"
@@ -165,6 +146,7 @@ function ReadFile() {
             />
             <Typography htmlFor="bfile" component="label">
                 <Button component="span" variant="contained" color="primary">
+                    <UploadFile />
                     Choose File
                 </Button>
                 <Input
@@ -178,11 +160,7 @@ function ReadFile() {
                 />
             </Typography>
 
-            {/* <label htmlFor="bfile">
-                <Button component="span" variant="contained" color="primary">
-                    Choose File
-                </Button>
-            </label> */}
+
         </div>
 
 

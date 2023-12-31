@@ -5,10 +5,10 @@ import logging
 from json import dumps, loads
 from random import randint
 
-logging.basicConfig(
-    format='[%(levelname)s] |%(asctime)s| %(message)s',
-    level=logging.INFO,
-    datefmt='%Y-%m-%d %H:%M:%S')
+# logging.basicConfig(
+#     format='[%(levelname)s] |%(asctime)s| %(message)s',
+#     level=logging.INFO,
+#     datefmt='%Y-%m-%d %H:%M:%S')
 
 
 class SaveFileInfo(_SaveFileInfo):

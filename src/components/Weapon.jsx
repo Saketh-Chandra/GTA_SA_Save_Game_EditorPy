@@ -62,6 +62,7 @@ function Weapon() {
                 </Grid>
             </Grid>
             <Divider variant="middle" />
+            
         </div>
     );
 }
