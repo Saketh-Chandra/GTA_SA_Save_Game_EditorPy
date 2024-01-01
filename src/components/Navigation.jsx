@@ -1,11 +1,13 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Button, Container } from '@mui/material';
-
+import { Button, Container, MobileStepper, useTheme } from '@mui/material';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 
 const Navigation = () => {
     const navigate = useNavigate();
+    const theme = useTheme();
 
 
 
@@ -36,19 +38,6 @@ const Navigation = () => {
     console.log(`isMenuPage: ${isMenuPage}`);
 
     const currentIndex = pages.findIndex((page) => page.path === location.pathname);
-    console.log(`currentIndex: ${currentIndex}`);
-    const nextIndex = (currentIndex + 1)
-    const previousIndex = (currentIndex - 1)
-
-
-
-
-
-
-    console.log(`currentIndex: ${currentIndex}`);
-    console.log(`nextIndex: ${nextIndex}`);
-    console.log(`previousIndex: ${previousIndex}`);
-
 
 
 
@@ -64,23 +53,38 @@ const Navigation = () => {
 
 
 
-
-
     return (
 
         isMenuPage &&
-        <Container style={{ display: 'flex', flexDirection: 'column', }}>
+        <Container >
+            <MobileStepper
+                variant="dots"
+                steps={pages.length}
+                position="static"
+                activeStep={currentIndex}
 
-            <div style={{ marginTop: 'auto', padding: 16, display: 'flex', justifyContent: 'space-between' }}>
-                <Button disabled={currentIndex === 0} variant="contained" color="primary" onClick={handlePrevious} style={{ marginLeft: 16 }}>
-                    Previous
-                </Button>
-                <Button disabled={currentIndex === (pages.length - 1)} variant="contained" color="primary" onClick={handleNext} style={{ marginLeft: 16 }}>
-                    Next
-                </Button>
-            </div>
+                nextButton={
+                    <Button size="small" onClick={handleNext} disabled={currentIndex === (pages.length - 1)}>
+                        Next
+                        {theme.direction === 'rtl' ? (
+                            <KeyboardArrowLeft />
+                        ) : (
+                            <KeyboardArrowRight />
+                        )}
+                    </Button>
+                }
+                backButton={
+                    <Button size="small" onClick={handlePrevious} disabled={currentIndex === 0}>
+                        {theme.direction === 'rtl' ? (
+                            <KeyboardArrowRight />
+                        ) : (
+                            <KeyboardArrowLeft />
+                        )}
+                        Back
+                    </Button>
+                }
+            />
         </Container>
-
     );
 };
 
