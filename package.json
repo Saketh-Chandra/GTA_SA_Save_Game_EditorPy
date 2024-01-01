@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:dev": "vite build --out-dir dist/GTA_SA_Save_Game_EditorPy",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview --port 3000  --host",
+    "preview:dev": "vite build --out-dir dist/GTA_SA_Save_Game_EditorPy &&  vite preview --port 3000 --open --mode production --out-dir dist/GTA_SA_Save_Game_EditorPy",
     "preview:build": "npm run build &&  vite preview --port 3000 --open --mode production",
     "watch": "vite build -w"
   },

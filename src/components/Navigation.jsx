@@ -1,15 +1,14 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Container } from '@mui/material';
 
-import { useDispatch, useSelector } from 'react-redux';
-import {
-    setCurrentPageIndex,
-} from '../features/navigateSlice';
+
 
 const Navigation = () => {
-    const dispatch = useDispatch();
-    const { currentPageIndex } = useSelector((state) => state.navigate);
+    const navigate = useNavigate();
+
+
+
     const pages = [
         {
             path: "/",
@@ -28,41 +27,60 @@ const Navigation = () => {
 
         }
     ]
-    const navigate = useNavigate();
-    // const [currentPageIndex, setCurrentPageIndex] = React.useState(0);
 
-    const goToNextPage = () => {
-        if (currentPageIndex < pages.length - 1) {
-            dispatch(setCurrentPageIndex(currentPageIndex + 1));
-            navigate(pages[currentPageIndex + 1].path);
-        }
-    };
+    const location = useLocation();
+    console.log(location.pathname);
 
-    const goToPreviousPage = () => {
-        if (currentPageIndex > 0) {
-            dispatch(setCurrentPageIndex(currentPageIndex - 1));
-            navigate(pages[currentPageIndex - 1].path);
-        }
-    };
+
+    const isMenuPage = pages.some((page) => page.path === location.pathname)
+    console.log(`isMenuPage: ${isMenuPage}`);
+
+    const currentIndex = pages.findIndex((page) => page.path === location.pathname);
+    console.log(`currentIndex: ${currentIndex}`);
+    const nextIndex = (currentIndex + 1)
+    const previousIndex = (currentIndex - 1)
+
+
+
+
+
+
+    console.log(`currentIndex: ${currentIndex}`);
+    console.log(`nextIndex: ${nextIndex}`);
+    console.log(`previousIndex: ${previousIndex}`);
+
+
+
+
+    const handleNext = () => {
+        const nextIndex = (currentIndex + 1);
+        navigate(pages[nextIndex].path)
+    }
+    const handlePrevious = () => {
+        const previousIndex = (currentIndex - 1);
+        navigate(pages[previousIndex].path)
+
+    }
+
+
+
+
 
     return (
-        //    set the button to the bottom of the page
-        <Container sx={
-            {
 
-                display: 'flex',
-                justifyContent: 'space-between',
-                padding: 2,
+        isMenuPage &&
+        <Container style={{ display: 'flex', flexDirection: 'column', }}>
 
-            }
-        }>
-            <Button variant="contained" color="primary" onClick={goToPreviousPage} disabled={currentPageIndex === 0}>
-                Previous
-            </Button>
-            <Button variant="contained" color="primary" onClick={goToNextPage} disabled={currentPageIndex === pages.length - 1}>
-                Next
-            </Button>
+            <div style={{ marginTop: 'auto', padding: 16, display: 'flex', justifyContent: 'space-between' }}>
+                <Button disabled={currentIndex === 0} variant="contained" color="primary" onClick={handlePrevious} style={{ marginLeft: 16 }}>
+                    Previous
+                </Button>
+                <Button disabled={currentIndex === (pages.length - 1)} variant="contained" color="primary" onClick={handleNext} style={{ marginLeft: 16 }}>
+                    Next
+                </Button>
+            </div>
         </Container>
+
     );
 };
 

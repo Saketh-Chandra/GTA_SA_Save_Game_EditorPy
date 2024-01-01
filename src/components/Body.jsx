@@ -9,7 +9,7 @@ import {
     setFireproof,
     setInfiniteRun,
 } from '../features/saveGameSlice';
-import Navigation from './Navigation';
+
 import Weapon from './Weapon';
 
 function Body() {
@@ -139,7 +139,7 @@ function Body() {
             </Grid>
             <Divider variant="middle" />
             <Weapon />
-            <Navigation />
+            
         </div>
     );
 }

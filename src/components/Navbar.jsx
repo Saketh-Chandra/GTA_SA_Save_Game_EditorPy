@@ -1,5 +1,5 @@
 // Navbar.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -10,25 +10,21 @@ import {
     ListItem,
     ListItemText,
     ListItemIcon,
+    Divider,
+    ListItemButton,
 } from '@mui/material';
 
-import Divider from '@mui/material/Divider';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import Navigation from './Navigation';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
-import InfoIcon from '@mui/icons-material/Info';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import { Link } from 'react-router-dom';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import CarRepairIcon from '@mui/icons-material/CarRepair';
 
 
-import ListItemButton from '@mui/material/ListItemButton';
-
-
-
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import TableChartIcon from '@mui/icons-material/TableChart';
-import DescriptionIcon from '@mui/icons-material/Description';
-import SettingsIcon from '@mui/icons-material/Settings';
 
 const menu = [
     [
@@ -38,38 +34,22 @@ const menu = [
             text: 'Home'
         },
         {
-            link: '/payload-form',
-            icon: <DescriptionIcon />,
-            text: 'Payload Form'
+            link: '/body',
+            icon: <FitnessCenterIcon />,
+            text: 'Body'
         },
         {
-            link: '/payload-table',
-            icon: <TableChartIcon />,
-            text: 'Payload Table'
+            link: '/garage',
+            icon: <CarRepairIcon />,
+            text: 'Garage'
         },
         {
-            link: '/payload-upload',
-            icon: <CloudUploadIcon />,
-            text: 'Payload Upload'
+            link: '/savefiledownload',
+            icon: <CloudDownloadIcon />,
+            text: 'Save File Download'
         }
-    ],
-    [
-        {
-            link: '/',
-            icon: <HomeIcon />,
-            text: 'Home'
-        },
-        {
-            link: '/',
-            icon: <SettingsIcon />,
-            text: 'Settings'
-        },
-        {
-            link: '/',
-            icon: <SettingsIcon />,
-            text: 'Testing'
-        },
     ]
+
 ]
 
 
@@ -80,11 +60,11 @@ const Navbar = () => {
         setDrawerOpen(!drawerOpen);
     };
 
+
     return (
         <div>
             <AppBar position="static">
                 <Toolbar>
-                    {/* Drawer toggle button for small screens */}
                     <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer}>
                         <MenuIcon />
                     </IconButton>
@@ -94,37 +74,47 @@ const Navbar = () => {
                 </Toolbar>
             </AppBar>
 
-            {/* Drawer for small screens */}
             <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
                 <>
                     {menu.map((menuList, index) => (
-                        <>
-                            <List key={index}>
-                                {/* {menuList.map((menuObj, index) => (
-                                    <ListItem key={`${index}-${menuObj.text}`} disablePadding>
-                                        <ListItemButton
-                                            component={<Link to="/">{menuObj.link}</Link>}
-                                        >
+                        <React.Fragment key={index}>
+                            <List key={`Nav-${index}`}>
+                                {menuList.map((menuObj, inner_index) => (
+                                    <ListItem key={`${index}-${inner_index}-${menuObj.text}`} disablePadding>
+                                        <ListItemButton component={Link} to={menuObj.link}>
                                             <ListItemIcon>
                                                 {menuObj.icon}
                                             </ListItemIcon>
                                             <ListItemText primary={menuObj.text} />
                                         </ListItemButton>
-                                        
                                     </ListItem>
-
-
-                                ))} */}
-                                <Link key="Home" to="/">
-                                    Home
-                                </Link>
+                                ))}
                             </List>
                             <Divider />
-                        </>
+                        </React.Fragment>
                     ))}
                 </>
+                <List key={"external-links"}>
+                    <ListItem key={"GitHub"} disablePadding>
+                        <ListItemButton
+                            component="a"
+                            href="https://github.com/Saketh-Chandra/GTA_SA_Save_Game_EditorPy"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            <ListItemIcon>
+                                <GitHubIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="GitHub" />
+                        </ListItemButton>
+                    </ListItem>
+                </List>
             </Drawer>
+            <Outlet />
+            <Navigation />
+
         </div>
+
     );
 };
 

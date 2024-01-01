@@ -10,25 +10,15 @@
 // 9. Clothes (Clothes, Tattoo, Haircut)[Future Release]
 // 10. Export Save File Component
 
-import React, { lazy, Suspense } from 'react'
-import Navbar from './components/Navbar';
+import React from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
 import { store } from './store/store'
 import { Provider } from 'react-redux'
-import { Container } from '@mui/material';
+
+import AppRoutes from './Routes';
 
 
-
-const General = lazy(() => import('./components/General'));
-const Body = lazy(() => import('./components/Body'));
-const Garage = lazy(() => import('./components/Garage'));
-const SaveFileDownload = lazy(() => import('./components/SaveFileDownload'));
-const PageNotFound = lazy(() => import('./components/PageNotFound'));
 
 
 const theme = createTheme({
@@ -49,31 +39,6 @@ const theme = createTheme({
 });
 
 
-const pages = [
-  {
-    path: "/",
-    element: <Suspense fallback={<div>Loading...</div>}><General /></Suspense>,
-
-  },
-  {
-    path: "/body",
-    element: <Suspense fallback={<div>Loading...</div>}><Body /></Suspense>,
-  },
-  {
-    path: "/garage",
-    element: <Suspense fallback={<div>Loading...</div>}><Garage /></Suspense>,
-  },
-  {
-    path: "/savefiledownload",
-    element: <Suspense fallback={<div>Loading...</div>}><SaveFileDownload /></Suspense>,
-  },
-  {
-    path: "*",
-    element: <Suspense fallback={<div>Loading...</div>}><PageNotFound /></Suspense>,
-  }
-]
-
-const router = createBrowserRouter(pages);
 
 function App() {
 
@@ -81,10 +46,7 @@ function App() {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Navbar />
-        <Container style={{ marginTop: "2.5vh" }}>
-          <RouterProvider router={router} />
-        </Container>
+        <AppRoutes />
       </ThemeProvider>
     </Provider>
 

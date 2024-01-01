@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { Button, Container, TextField } from '@mui/material';
-import Navigation from './Navigation';
+
 
 function SaveFileDownload() {
     const saveGameData = useSelector((state) => state.saveGame)
@@ -22,7 +22,7 @@ function SaveFileDownload() {
                 <Button variant="outlined" onClick={handleDownload}>Generate Save File</Button>
 
             </Container>
-            <Navigation />
+            
         </>
     )
 }

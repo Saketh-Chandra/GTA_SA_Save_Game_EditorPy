@@ -9,7 +9,7 @@ import {
     addVehicle,
 } from '../features/saveGameSlice';
 import Vehicle from './Vehicle';
-import Navigation from './Navigation';
+
 
 
 function Garage() {
@@ -49,7 +49,7 @@ function Garage() {
                     </Button>
                 </Grid>
             </Grid>
-            <Navigation />
+           
         </>
     );
 }

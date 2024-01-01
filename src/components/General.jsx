@@ -7,7 +7,7 @@ import SecurityIcon from '@mui/icons-material/Security';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import RotatingIcon from './utils/RotatingIcon';
-import Navigation from './Navigation';
+
 import {
     setHealth,
     setArmor,
@@ -201,7 +201,7 @@ function General() {
                 </Grid>
             </Grid>
             <Divider variant="middle" />
-            <Navigation />
+            
         </div >
     );
 }
