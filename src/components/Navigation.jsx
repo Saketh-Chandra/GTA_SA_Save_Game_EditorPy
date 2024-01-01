@@ -5,49 +5,23 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 
-const Navigation = () => {
+const Navigation = ({menu}) => {
     const navigate = useNavigate();
-    const theme = useTheme();
-
-
-
-    const pages = [
-        {
-            path: "/",
-
-        },
-        {
-            path: "/body",
-
-        },
-        {
-            path: "/garage",
-
-        },
-        {
-            path: "/savefiledownload",
-
-        }
-    ]
-
     const location = useLocation();
-    console.log(location.pathname);
-
-
-    const isMenuPage = pages.some((page) => page.path === location.pathname)
-    console.log(`isMenuPage: ${isMenuPage}`);
-
-    const currentIndex = pages.findIndex((page) => page.path === location.pathname);
-
-
+    const theme = useTheme();
+    
+    const pages = menu.flat()
+    const isMenuPage = pages.some((page) => page.link === location.pathname)
+   
+    const currentIndex = pages.findIndex((page) => page.link === location.pathname);
 
     const handleNext = () => {
         const nextIndex = (currentIndex + 1);
-        navigate(pages[nextIndex].path)
+        navigate(pages[nextIndex].link)
     }
     const handlePrevious = () => {
         const previousIndex = (currentIndex - 1);
-        navigate(pages[previousIndex].path)
+        navigate(pages[previousIndex].link)
 
     }
 

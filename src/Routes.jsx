@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import Navbar from './components/Navbar';
 
-// const General = lazy(() => import('./components/General'));
+
 const General = lazy(() => import('./page/GeneralPage'));
 const Body = lazy(() => import('./page/BodyPage'));
 const Garage = lazy(() => import('./page/GaragePage'));

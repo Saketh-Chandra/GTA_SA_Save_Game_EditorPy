@@ -1,5 +1,5 @@
 // Navbar.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -14,7 +14,7 @@ import {
     ListItemButton,
 } from '@mui/material';
 
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import Navigation from './Navigation';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -111,7 +111,7 @@ const Navbar = () => {
                 </List>
             </Drawer>
             <Outlet />
-            <Navigation />
+            <Navigation menu={menu} />
 
         </div>
 
