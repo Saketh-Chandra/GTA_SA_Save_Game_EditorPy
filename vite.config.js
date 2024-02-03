@@ -92,5 +92,5 @@ export default defineConfig({
       }
     ),
   ],
-  // base: '/GTA_SA_Save_Game_EditorPy/'
+  base: '/GTA_SA_Save_Game_EditorPy/',
 })
