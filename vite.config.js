@@ -66,19 +66,19 @@ export default defineConfig({
           ],
           description: "GTA: SA Savegame EditorPy is a Python-based savegame editor for Grand Theft Auto: San Andreas.",
           display: "standalone",
-          // start_url: "/GTA_SA_Save_Game_EditorPy/",
-          // scope: "/GTA_SA_Save_Game_EditorPy/",
-          scope: "/",
-          start_url: "/",
+          start_url: "/GTA_SA_Save_Game_EditorPy/",
+          scope: "/GTA_SA_Save_Game_EditorPy/",
+          // scope: "/",
+          // start_url: "/",
           theme_color: "#000",
           icons: [
             {
-              src: "/images/icons/icon_x512.png",
+              src: "/GTA_SA_Save_Game_EditorPy/images/icons/icon_x512.png",
               type: "image/png",
               sizes: "512x512"
             },
             {
-              src: "/images/icons/icon_x192.png",
+              src: "/GTA_SA_Save_Game_EditorPy/images/icons/icon_x192.png",
               type: "image/png",
               sizes: "192x192",
               purpose: "any maskable"

@@ -24,16 +24,21 @@ function PageNotFound() {
     const [randomMessage] = useState(getRandomMessage());
 
     return (
-        <Container style={{ marginTop: "2.5vh", textAlign: 'center' }}>
+        <Container style={{
+            textAlign: 'center',
+            marginBottom: "4rem",
+            marginTop: "5rem"
+        }}>
             <Typography variant="h5" color="error">
                 {randomMessage}
             </Typography>
             <Typography variant="body1" style={{ marginBottom: '20px' }}>
                 Better head back to
-                <Link to="/"> the Home Page</Link> before things get even crazier in the world of GTA SA Save File Editor!
+                <Link to="/GTA_SA_Save_Game_EditorPy/"> the Home Page</Link> before things get even crazier in the world of GTA SA Save File Editor!
             </Typography>
         </Container>
     );
 }
 
 export default PageNotFound;
+

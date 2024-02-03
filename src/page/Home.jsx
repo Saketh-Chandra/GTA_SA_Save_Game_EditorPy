@@ -18,8 +18,6 @@ const Home = () => {
             <Garage />
 
             <SaveFileDownload />
-
-
         </Container>
     );
 };
