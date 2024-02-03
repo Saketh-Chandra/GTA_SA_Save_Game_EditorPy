@@ -1,12 +1,12 @@
 export const garageList = [
     {
-        garageName: 'Ganton garage (Grove St.)', garageID:"cjsafe"
+        garageName: 'Ganton garage (Grove St.)', garageID: "cjsafe"
     },
     {
-        garageName: 'Santa Maria Beach garage', garageID:"beacsv"
+        garageName: 'Santa Maria Beach garage', garageID: "beacsv"
     },
     {
-        garageName: 'Muholland garage', garageID:"CEsafe1"
+        garageName: 'Muholland garage', garageID: "CEsafe1"
     }
 ];
 

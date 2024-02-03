@@ -31,7 +31,7 @@ function Body() {
             <Typography variant="h5">Body</Typography>
 
             <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} >
 
                     <Typography id="fat" gutterBottom>
                         Fat
@@ -45,10 +45,11 @@ function Body() {
                         max={1000}
                         min={0}
                         onChange={(e) => dispatch(setFat(e.target.value))}
+                        sx={{ width: "90%" }}
                     />
                 </Grid>
 
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} >
 
                     <Typography id="muscle" gutterBottom>
                         Muscle
@@ -62,6 +63,7 @@ function Body() {
                         min={0}
                         valueLabelDisplay="auto"
                         onChange={(e) => dispatch(setMuscle(e.target.value))}
+                        sx={{ width: "90%" }}
                     />
                 </Grid>
 
@@ -79,6 +81,7 @@ function Body() {
                         max={2000}
                         min={0}
                         onChange={(e) => dispatch(setSexAppeal(e.target.value))}
+                        sx={{ width: "90%" }}
                     />
                 </Grid>
 
@@ -96,6 +99,7 @@ function Body() {
                         max={1000}
                         min={0}
                         onChange={(e) => dispatch(setStamina(e.target.value))}
+                        sx={{ width: "90%" }}
                     />
                 </Grid>
 
@@ -139,7 +143,7 @@ function Body() {
             </Grid>
             <Divider variant="middle" />
             <Weapon />
-            
+
         </div>
     );
 }

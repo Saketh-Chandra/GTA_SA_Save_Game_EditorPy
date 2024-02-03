@@ -34,7 +34,7 @@ const Navigation = ({menu}) => {
             <MobileStepper
                 variant="dots"
                 steps={pages.length}
-                position="static"
+                position="bottom"
                 activeStep={currentIndex}
 
                 nextButton={

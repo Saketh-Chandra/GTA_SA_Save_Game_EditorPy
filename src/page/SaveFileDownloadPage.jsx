@@ -8,7 +8,10 @@ function GaragePage() {
 
 
     return (
-        <Container >
+        <Container style={{
+            marginBottom: "4rem",
+            marginTop: "6rem"
+        }}>
             <SaveFileDownload />
 
         </Container>

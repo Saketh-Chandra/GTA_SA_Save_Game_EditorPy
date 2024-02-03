@@ -1,10 +1,9 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense } from 'react';
 import {
     createBrowserRouter,
     RouterProvider,
-} from "react-router-dom";
+} from 'react-router-dom';
 import Navbar from './components/Navbar';
-
 
 const General = lazy(() => import('./page/GeneralPage'));
 const Body = lazy(() => import('./page/BodyPage'));
@@ -14,55 +13,56 @@ const PageNotFound = lazy(() => import('./components/PageNotFound'));
 
 const pages = [
     {
-        path: "/",
+        path: '/',
         element: <Navbar />,
         children: [
             {
-                path: "/",
-                element:
+                path: '/',
+                element: (
                     <Suspense fallback={<div>Loading...</div>}>
                         <General />
                     </Suspense>
-
+                ),
             },
             {
-                path: "/body",
-                element:
+                path: '/body',
+                element: (
                     <Suspense fallback={<div>Loading...</div>}>
                         <Body />
                     </Suspense>
+                ),
             },
             {
-                path: "/garage",
-                element:
+                path: '/garage',
+                element: (
                     <Suspense fallback={<div>Loading...</div>}>
                         <Garage />
                     </Suspense>
+                ),
             },
             {
-                path: "/savefiledownload",
-                element:
+                path: '/savefiledownload',
+                element: (
                     <Suspense fallback={<div>Loading...</div>}>
                         <SaveFileDownload />
                     </Suspense>
+                ),
             },
             {
-                path: "*",
-                element:
+                path: '*',
+                element: (
                     <Suspense fallback={<div>Loading...</div>}>
                         <PageNotFound />
                     </Suspense>
-            }
-        ]
-    }
-]
-
+                ),
+            },
+        ],
+    },
+];
 
 function AppRoutes() {
     const router = createBrowserRouter(pages);
-    return (
-        <RouterProvider router={router} />
-    )
+    return <RouterProvider router={router} />;
 }
 
-export default AppRoutes
+export default AppRoutes;

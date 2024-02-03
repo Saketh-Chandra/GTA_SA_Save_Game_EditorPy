@@ -17,7 +17,12 @@ function GaragePage() {
     }
 
     return (
-        <Container style={{ display: 'flex' }}>
+        <Container style={{ display: 'flex' ,  marginBottom: "4rem",
+        marginTop: "4rem"
+        }}>
+           
+           
+        
 
             <Garage />
 

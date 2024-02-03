@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Container, Button } from '@mui/material';
+import { Container, } from '@mui/material';
 import General from '../components/General';
 import Body from '../components/Body';
 import Weapon from '../components/Weapon';

@@ -8,7 +8,10 @@ function BodyPage() {
 
 
     return (
-        <Container >
+        <Container style={{
+            marginBottom: "4rem",
+            marginTop: "4rem"
+        }}>
             <Body />
         </Container>
     )
