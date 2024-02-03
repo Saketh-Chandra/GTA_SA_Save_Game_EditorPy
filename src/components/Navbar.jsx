@@ -25,22 +25,22 @@ import CarRepairIcon from '@mui/icons-material/CarRepair';
 const menu = [
     [
         {
-            link: '/',
+            link: '/GTA_SA_Save_Game_EditorPy/',
             icon: <HomeIcon />,
             text: 'Home'
         },
         {
-            link: '/body',
+            link: '/GTA_SA_Save_Game_EditorPy/body',
             icon: <FitnessCenterIcon />,
             text: 'Body'
         },
         {
-            link: '/garage',
+            link: '/GTA_SA_Save_Game_EditorPy/garage',
             icon: <CarRepairIcon />,
             text: 'Garage'
         },
         {
-            link: '/savefiledownload',
+            link: '/GTA_SA_Save_Game_EditorPy/savefiledownload',
             icon: <CloudDownloadIcon />,
             text: 'Save File Download'
         }

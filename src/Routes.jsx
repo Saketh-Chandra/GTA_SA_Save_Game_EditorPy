@@ -13,11 +13,11 @@ const PageNotFound = lazy(() => import('./components/PageNotFound'));
 
 const pages = [
     {
-        path: '/',
+        path: '/GTA_SA_Save_Game_EditorPy/',
         element: <Navbar />,
         children: [
             {
-                path: '/',
+                path: '/GTA_SA_Save_Game_EditorPy/',
                 element: (
                     <Suspense fallback={<div>Loading...</div>}>
                         <General />
@@ -25,7 +25,7 @@ const pages = [
                 ),
             },
             {
-                path: '/body',
+                path: '/GTA_SA_Save_Game_EditorPy/body',
                 element: (
                     <Suspense fallback={<div>Loading...</div>}>
                         <Body />
@@ -33,7 +33,7 @@ const pages = [
                 ),
             },
             {
-                path: '/garage',
+                path: '/GTA_SA_Save_Game_EditorPy/garage',
                 element: (
                     <Suspense fallback={<div>Loading...</div>}>
                         <Garage />
@@ -41,7 +41,7 @@ const pages = [
                 ),
             },
             {
-                path: '/savefiledownload',
+                path: '/GTA_SA_Save_Game_EditorPy/savefiledownload',
                 element: (
                     <Suspense fallback={<div>Loading...</div>}>
                         <SaveFileDownload />
